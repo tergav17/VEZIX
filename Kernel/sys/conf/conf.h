@@ -1,4 +1,4 @@
-; vezix configuration header
+; vezix config header
 
 ; all low.s and top.s stuff is extern by default
 .extern t_base, b_base, svnhl

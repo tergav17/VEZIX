@@ -1,5 +1,5 @@
 cd ../core
-as_r ../conf/conf.h core.h *.s
+as_r ../conf/conf.s ../h/core.s *.s
 echo -n "core size: "
 size_r a.out
 mv a.out ../conf/obj/core.o

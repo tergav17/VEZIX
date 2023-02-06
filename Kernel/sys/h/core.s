@@ -1,2 +1,0 @@
-; vezix core header file
-

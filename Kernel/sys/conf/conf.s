@@ -1,8 +1,13 @@
+; conf.s
 ; vezix config header
 
-; all low.s and top.s stuff is extern by default
-.extern t_base, b_base, svnhl
-
 ; memory format stuff
-c_utop = 	t_base	; user space top
-c_ubase =	0x0000  ; user space base
+c_utop 	=	t_base	; uspace top
+c_ubase =	0x0000  ; uspace base
+
+; common data structures
+
+.type word_t {
+	byte	low,
+	byte	high
+}

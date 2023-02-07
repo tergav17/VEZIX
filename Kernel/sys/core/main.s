@@ -14,6 +14,9 @@ main:
 	ld	hl,str_vez
 	call	kputs
 	
+	; init subsystems
+	call	 binit
+	
 	halt
 	
 	

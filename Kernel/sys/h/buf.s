@@ -1,5 +1,5 @@
 ; buf.s
-; buffer header file
+; vezix buffer header
 
 ; the buf_t data structure acts as a
 ; header for a single 512 buffer. if a
@@ -14,7 +14,7 @@
 	word_t	dev,	; device number
 	byte	error,
 	
-	word_t	next,	; next buf
+	word_t	next	; next buf
 }
 
 ; block devices in vezix word on a

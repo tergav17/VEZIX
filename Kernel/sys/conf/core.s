@@ -1,5 +1,8 @@
 ; core.s
-; vezix core header file
+; vezix core header
 
-; all low.s and top.s stuff is extern by default
+; low.s / top.s
 .extern t_base, b_base, svnhl
+
+; blkio
+.extern binit

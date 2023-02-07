@@ -3,9 +3,18 @@
 
 .text
 
+; get block, if the appropriate block
+; already exists, then return it.
+; otherwise free a block and return it
+;
+; uses: hl; iy
+getblk:
+	call	svnhl
+	ret
+
 ; buffer init
 ;
-; uses: all
+; uses: af, bc, de, hl, ix
 .globl binit
 binit:
 	ld	c,c_nbuf
@@ -13,8 +22,11 @@ binit:
 	ld	ix,buftab
 	xor	a
 0:
-	ld	(ix+buf_t.flag),a	; reset flag
-	ld	(ix+buf_t.addr.high),h	; set buffer address
+	; reset flag byte
+	ld	(ix+buf_t.flag),a
+	
+	; set address of block
+	ld	(ix+buf_t.addr.high),h
 	ld	(ix+buf_t.addr.low),l
 	
 	ld	de,$buf_t

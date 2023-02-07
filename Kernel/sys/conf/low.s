@@ -1,5 +1,5 @@
 ; low.s
-; bottom of object file
+; bottom of kernel image
 ;
 ; contains entry, base addresses, and misc routines
 

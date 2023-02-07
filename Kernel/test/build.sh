@@ -17,7 +17,9 @@ mv a.out ../conf/obj/blkio.o
 
 cd ../conf
 as_r low.s
-ld_r -s a.out obj/core.o obj/blkio.o
+mv a.out obj/low.o
+as_r top.s
+ld_r -s obj/low.o obj/core.o obj/blkio.o a.out
 echo -n "total size: "
 size_r a.out
 reloc_r -n a.out 0xC000

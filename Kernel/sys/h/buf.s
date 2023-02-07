@@ -32,8 +32,8 @@
 }
 
 ; buf_t flags
-b_read	=	0x01	; set if read
-b_done	=	0x02	; op done 
-b_error	=	0x04	; op aborted
-b_busy	=	0x08	; buf is busy
-b_delwr	=	0x10	; write on use
+b_read	=	0x00	; set if read
+b_done	=	0x01	; op done 
+b_error	=	0x02	; op aborted
+b_busy	=	0x03	; buf is busy
+b_delwr	=	0x04	; write on use

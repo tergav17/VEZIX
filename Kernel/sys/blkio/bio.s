@@ -37,6 +37,10 @@ binit:
 	ld	(ix+buf_t.addr.high),h
 	ld	(ix+buf_t.addr.low),l
 	
+	; release block
+	call	brelse
+	
+	; increment pointers
 	ld	de,$buf_t
 	add	ix,de
 	ld	de,512
@@ -48,14 +52,36 @@ binit:
 
 
 
-; releases a block, sets flag to not
-; busy
+; releases a block. sets flag to not
+; busy and add to free list
 ; ix = pointer to buf header
 ;
 ; uses: af
 brelse:
+	; reset the busy flag
 	res	b_busy,(ix+buf_t.flag),a
 	ld	(ix+buf_t.flag),a
+	
+	; add the free list
+	push	hl
+	push	ix
+	pop	hl
+	ld	ix,fr_head
+	call	ixnext
+	jr	z,0f
+	
+	; set as tail?
+	ld	ix,fr_tail
+	ld	(ix+buf_t.next.high),h
+	ld	(ix+buf_t.next.low),l
+	jr	1f
+0:
+	; empty, set head as block
+	ld	(fr_head),hl
+1:
+	; set tail and return
+	ld	(fr_tail),hl
+	pop	hl
 	ret
 	
 

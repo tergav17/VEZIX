@@ -7,21 +7,34 @@
 ; already exists, then return it.
 ; otherwise free a block and return it
 ; hl = dev
-; de = blkno
+; bc = blkno
 ;
 ; uses: hl, ix, iy
 getblk:
 	call	svnhl
-	ld	b,0
-	ld	c,c_nbuf
+	ex	de,hl	; de = dev
+	ld	a,c_nbuf
 	ld	ix,buftab
 0:
-	; we are looking for the oldest
-	; non-busy buf; or a match with
-	; dev and blkno
-	bit	b_busy,(ix+buf_t.flag)
-;	jr	nz,
-	ret
+	; first we search for buffers
+	; that already contain desired
+	; information
+	ld	(ix+buf_t.dev.high),h
+	ld	(ix+buf_t.dev.low),l
+	or	a
+	sbc	hl,de
+	jr	nz,1f
+	ld	(ix+buf_t.blkno.high),h
+	ld	(ix+buf_t.blkno.low),l
+	or	a
+	sbc	hl,bc
+	jr	nz,1f
+	; found blocks
+1:
+	dec 	a
+	jr	nz,0b
+	; alight, just grab one off the
+	; free list
 
 ; buffer init
 ;

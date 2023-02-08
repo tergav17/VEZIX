@@ -13,14 +13,14 @@
 getblk:
 	call	svnhl
 	ld	b,0
-	ld	c,c_nblk
+	ld	c,c_nbuf
 	ld	ix,buftab
 0:
 	; we are looking for the oldest
 	; non-busy buf; or a match with
 	; dev and blkno
 	bit	b_busy,(ix+buf_t.flag)
-	jr	nz,
+;	jr	nz,
 	ret
 
 ; buffer init

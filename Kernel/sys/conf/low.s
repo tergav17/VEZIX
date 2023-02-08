@@ -28,6 +28,12 @@ svnhl:
 	pop	af
 	ret
 	
+; moves forward in a linked list
+; z will be set if pointer is null
+; ix = pointer to list
+;
+; uses: 
+ixnext:
 
 
 .bss

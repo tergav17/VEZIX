@@ -7,14 +7,14 @@
 ; set, it is treated as available and
 ; may be reused
 .type buf_t {
+	word_t	next,	; next buf
+
 	byte	flag,	; buffer flags
 	word_t	wcount,	; transfer cnt
 	word_t	addr,	; buf core addr
 	word_t	blkno,	; blk # on dev
 	word_t	dev,	; device number
-	byte	error,
-	
-	word_t	next	; next buf
+	byte	error	; error #
 }
 
 ; block devices in vezix word on a

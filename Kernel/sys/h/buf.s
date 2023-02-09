@@ -10,8 +10,7 @@
 	word_t	next,	; next buf
 
 	byte	flag,	; buffer flags
-	byte	age,
-	word_t	wcount,	; transfer cnt
+	byte	age,	; buffer age
 	word_t	addr,	; buf core addr
 	word_t	blkno,	; blk # on dev
 	word_t	dev,	; device number

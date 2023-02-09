@@ -9,26 +9,27 @@
 ; hl = dev
 ; bc = blkno
 ;
-; uses: af', hl, ix, iy
+; saved: af, bc, de
+
 getblk:
 	call	svnhl
-	ex	de,hl	; de = dev
 	ld	a,c_nbuf
 	ld	ix,buftab
 	ld	iy,0	; iy = result
 	ex	af,af'
 	xor	a	; a' = age
 0:
+	ex	de,hl	; de = dev
 	; first we search for buffers
 	; that already contain desired
 	; information
-	ld	(ix+buf_t.dev.high),h
-	ld	(ix+buf_t.dev.low),l
+	ld	h,(ix+buf_t.dev.high)
+	ld	l,(ix+buf_t.dev.low)
 	or	a
 	sbc	hl,de
 	jr	nz,2f
-	ld	(ix+buf_t.blkno.high),h
-	ld	(ix+buf_t.blkno.low),l
+	ld	h,(ix+buf_t.blkno.high)
+	ld	l,(ix+buf_t.blkno.low)
 	or	a
 	sbc	hl,bc
 	jr	nz,2f
@@ -40,7 +41,7 @@ getblk:
 2:
 	; skip if busy
 	bit	b_busy,(ix+buf_t.flag)
-	jr	4f
+	jr	nz,4f
 	
 	; skip if age is lower
 	cp	(ix+buf_t.age)
@@ -52,12 +53,57 @@ getblk:
 	pop	iy
 4:
 	; advance forward
+	ld	hl,$buf_t
+	ex	de,hl
+	add	ix,de
 	ex	af,af'
 	dec 	a
 	ex	af,af'
 	jr	nz,0b
 5:
 	; search complete
+	; panic if no result
+	push	bc
+	push	hl
+	push	iy
+	pop	ix
+	ld	d,iyh
+	ld	e,iyl
+	xor	a
+	cp	d
+	jr	nz,0f
+	cp	e
+	; jp	panic todo
+0:
+	; write out if delwr
+	bit	b_delwr,(ix+buf_t.flag)
+	;call	nz,bwrite todo
+	
+	; set new flags
+	pop	hl
+	ld	(ix+buf_t.dev.high),h
+	ld	(ix+buf_t.dev.low),l
+	pop	hl
+	ld	(ix+buf_t.dev.high),h
+	ld	(ix+buf_t.dev.low),l
+	ld	(ix+buf_t.flag),1<<b_busy
+	
+	; update timing
+	ld	c,c_nbuf
+	ld	iy,buftab
+	ld	a,(ix+buf_t.age)
+1:
+	cp	(iy+buf_t.age)
+	
+2:
+	inc	(iy+buf_t.age)
+
+	ld	de,$buf_t
+	add	iy,de
+	dec	c
+	jr	nz,1b
+	ret
+	
 	
 
 ; buffer init

@@ -1,5 +1,5 @@
 ; z80dasm 1.1.6
-; command line: z80dasm -l -g 0xC000 -o out/vezix.asm out/vezix
+; command line: z80dasm -l -g 0xC000 -o vezix.asm vezix
 
 	org	0c000h
 
@@ -35,7 +35,7 @@ lc022h:
 lc024h:
 	ld sp,lc000h
 	xor a	
-	ld hl,0cdceh
+	ld hl,0cdd4h
 	ld de,0c18ch
 	push de	
 	sbc hl,de
@@ -46,119 +46,109 @@ lc024h:
 	inc de	
 	ld (hl),a	
 	ldir
-	call sub_c0bch
+	call sub_c0a2h
 	ld hl,lc178h
-	call sub_c077h
+	call sub_c05eh
 	ld hl,lc185h
-	call sub_c077h
+	call sub_c05eh
 	xor a	
 	ld hl,lc000h
 	ld de,00000h
 	sbc hl,de
-	call sub_c084h
+	call sub_c06bh
 	ld hl,lc182h
-	call sub_c077h
-	call sub_c150h
-	ld h,0ffh
-	ld bc,00000h
-	call sub_c0c5h
-	call sub_c170h
-	ld h,0ffh
-	ld bc,00000h
-	call sub_c0c5h
-	push ix
-	pop hl	
-	call sub_c084h
+	call sub_c05eh
+	call sub_c13dh
 	halt	
-sub_c077h:
+sub_c05eh:
 	call sub_c003h
-lc07ah:
+lc061h:
 	ld a,(hl)	
 	or a	
 	ret z	
 	ld b,a	
-	call sub_c0b2h
+	call sub_c098h
 	inc hl	
-	jr lc07ah
-sub_c084h:
+	jr lc061h
+sub_c06bh:
 	call sub_c003h
 	ld d,030h
 	ld bc,0d8f0h
-	call sub_c0a5h
+	call sub_c08ch
 	ld bc,0fc18h
-	call sub_c0a5h
+	call sub_c08ch
 	ld bc,0ff9ch
-	call sub_c0a5h
+	call sub_c08ch
 	ld bc,0fff6h
-	call sub_c0a5h
+	call sub_c08ch
 	ld bc,0ffffh
-	inc d	
-sub_c0a5h:
+	dec d	
+sub_c08ch:
 	ld a,02fh
-lc0a7h:
+lc08eh:
 	inc a	
 	add hl,bc	
-	jr c,lc0a7h
+	jr c,lc08eh
 	sbc hl,bc
 	ld b,a	
 	cp d	
 	ret z	
-	ld d,000h
-sub_c0b2h:
+	dec d	
+sub_c098h:
 	in a,(010h)
 	and 002h
-	jr z,sub_c0b2h
+	jr z,sub_c098h
 	ld a,b	
 	out (011h),a
 	ret	
-sub_c0bch:
+sub_c0a2h:
 	ld a,003h
 	out (010h),a
 	ld a,015h
 	out (010h),a
 	ret	
-sub_c0c5h:
 	call sub_c003h
 	xor a	
 	ld ix,0cd8ch
 	ld iy,00000h
 	ex af,af'	
 	ld a,006h
-lc0d4h:
+lc0bah:
 	ex af,af'	
 	ex de,hl	
 	bit 7,d
-	jr nz,lc0f6h
-	ld h,(ix+009h)
-	ld l,(ix+008h)
+	jr nz,lc0dch
+	ld h,(ix+00ah)
+	ld l,(ix+009h)
 	or a	
 	sbc hl,de
-	jr nz,lc0f6h
-	ld h,(ix+007h)
-	ld l,(ix+006h)
+	jr nz,lc0dch
+	ld h,(ix+008h)
+	ld l,(ix+007h)
 	or a	
 	sbc hl,bc
-	jr nz,lc0f6h
+	jr nz,lc0dch
 	push ix
 	pop iy
-	jr lc111h
-lc0f6h:
+	jr lc0fah
+lc0dch:
 	bit 3,(ix+002h)
-	jr nz,lc107h
-	cp (ix+003h)
-	jr z,lc103h
-	jr nc,lc107h
-lc103h:
+	jr nz,lc0f0h
+	cp (ix+004h)
+	jr z,lc0e9h
+	jr nc,lc0f0h
+lc0e9h:
 	push ix
 	pop iy
-lc107h:
-	ld hl,0000bh
+	ld a,(ix+004h)
+lc0f0h:
+	ld hl,0000ch
 	ex de,hl	
 	add ix,de
 	ex af,af'	
 	dec a	
-	jr nz,lc0d4h
-lc111h:
+	jr nz,lc0bah
+lc0fah:
 	push bc	
 	push hl	
 	push iy
@@ -167,49 +157,67 @@ lc111h:
 	defb 0fdh,05dh	;ld e,iyl
 	xor a	
 	cp d	
-	jr nz,lc120h
+	jr nz,lc109h
 	cp e	
-lc120h:
+lc109h:
 	bit 4,(ix+002h)
 	pop hl	
-	ld (ix+009h),h
-	ld (ix+008h),l
+	ld (ix+00ah),h
+	ld (ix+009h),l
 	pop hl	
-	ld (ix+009h),h
-	ld (ix+008h),l
+	ld (ix+00ah),h
+	ld (ix+009h),l
 	ld (ix+002h),008h
 	ld c,006h
 	ld iy,0cd8ch
-	ld a,(ix+003h)
-lc13fh:
-	cp (iy+003h)
-	jr nc,lc147h
-	inc (iy+003h)
-lc147h:
-	ld de,0000bh
+	ld a,(ix+004h)
+lc128h:
+	cp (iy+004h)
+	jr c,lc130h
+	inc (iy+004h)
+lc130h:
+	ld de,0000ch
 	add iy,de
 	dec c	
-	jr nz,lc13fh
+	jr nz,lc128h
+	ld (ix+004h),000h
 	ret	
-sub_c150h:
+sub_c13dh:
 	ld c,006h
 	ld hl,0c18ch
 	ld ix,0cd8ch
 	xor a	
-lc15ah:
-	ld (ix+005h),h
-	ld (ix+004h),l
-	call sub_c170h
-	ld de,0000bh
+lc147h:
+	ld (ix+006h),h
+	ld (ix+005h),l
+	ld (ix+003h),c
+	call sub_c160h
+	ld de,0000ch
 	add ix,de
 	ld de,00200h
 	add hl,de	
 	dec c	
 	ret z	
-	jr lc15ah
-sub_c170h:
+	jr lc147h
+sub_c160h:
 	defb 0ddh,0cbh,002h,09fh	;res 3,(ix+002h) & ld a,(ix+002h)
 	ld (ix+002h),a
+	ret	
+	halt	
+	pop bc	
+	nop	
+	nop	
+	ld (hl),a	
+	pop bc	
+	ld (hl),a	
+	pop bc	
+	ld (hl),a	
+	pop bc	
+	ld (hl),a	
+	pop bc	
+	ld (hl),a	
+	pop bc	
+	ret	
 	ret	
 lc178h:
 	halt	

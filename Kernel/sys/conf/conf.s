@@ -1,19 +1,32 @@
 ; conf.s
-; vezix config header
+; vezix device configuration
 
-; top and bottom of core
-.extern d_top, b_top, t_base, b_base
 
-; memory map config
-c_utop 	=	t_base	; uspace top
-c_ubase =	0x0000  ; uspace base
-
-; buffer config
-c_nbuf	=	6	; # of buffers
-
-; common data structures
-
-.type word_t {
-	byte	low,
-	byte	high
+; block device switch
+; this is where block device drivers
+; are added to the kernel
+.globl bdevsw
+.defl bdev_t[c_nbdev] bdevsw {
+	nobdev,
+	0
 }
+
+; character device switch
+; this is where char device drivers
+; are added to the kernel
+.globl cdevsw
+.defl cdev_t[c_ncdev] cdevsw {
+	nocdev,
+	nocdev,
+	nocdev,
+	nocdev,
+	nocdev
+}
+
+; used to indicate no block device
+nobdev:
+	ret
+	
+; used to indicate no char device
+nocdev:
+	ret

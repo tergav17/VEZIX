@@ -11,6 +11,7 @@
 	word_t	next,	; next buf
 
 	byte	flag,	; buffer flags
+	byte	serial,
 	byte	age,	; buffer age
 	word_t	addr,	; buf core addr
 	word_t	blkno,	; blk # on dev

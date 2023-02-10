@@ -42,7 +42,7 @@ kputd:
 	ld	bc,0-10
 	call	0f
 	ld	bc,0-1
-	inc	d
+	dec	d
 0:
 	ld	a,'0'-1		; get character
 1:
@@ -53,7 +53,7 @@ kputd:
 	ld	b,a
 	cp	d		; check for leading zeros
 	ret	z
-	ld	d,0
+	dec	d
 	; fall throught to kputc
 	
 

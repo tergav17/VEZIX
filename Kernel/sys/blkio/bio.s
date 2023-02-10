@@ -54,9 +54,10 @@ getblk:
 	jr	z,3f
 	jr	nc,4f
 3:
-	; set iy = ix
+	; set iy = ix, set age
 	push	ix
 	pop	iy
+	ld	a,(ix+buf_t.age)
 4:
 	; advance forward
 	ld	hl,$buf_t
@@ -101,13 +102,14 @@ getblk:
 	ld	a,(ix+buf_t.age)
 1:
 	cp	(iy+buf_t.age)
-	jr	nc,2f
+	jr	c,2f
 	inc	(iy+buf_t.age)
 2:
 	ld	de,$buf_t
 	add	iy,de
 	dec	c
 	jr	nz,1b
+	ld	(ix+buf_t.age),0
 	ret
 	
 	
@@ -125,6 +127,9 @@ binit:
 	; set address of block
 	ld	(ix+buf_t.addr.high),h
 	ld	(ix+buf_t.addr.low),l
+	
+	; set the serial #, debugging
+	ld	(ix+buf_t.serial),c
 	
 	; release block
 	call	brelse

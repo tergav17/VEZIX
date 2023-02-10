@@ -27,6 +27,15 @@ main:
 	call	kinit
 	ld	hl,str_vez
 	call	kputs
+	ld	hl,str_mem
+	call	kputs
+	xor	a
+	ld	hl,c_utop
+	ld	de,c_ubase
+	sbc	hl,de
+	call	kputd
+	ld	hl,str_crlf
+	call	kputs
 	
 	; init subsystems
 	call	 binit
@@ -35,5 +44,8 @@ main:
 	
 	
 .data
-.defl byte str_vez	"vezix boot\n\r\0"
+.defl byte str_vez	"vezix boot"
+.defl byte str_crlf	"\n\r\0"
+.defl byte str_mem	"mem = \0"
+
 	

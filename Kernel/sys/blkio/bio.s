@@ -8,9 +8,10 @@
 ; otherwise free a block and return it
 ; hl = dev
 ; bc = blkno
-;
+; 
+; ix = pointer to buffer
 ; saved: af, bc, de
-
+.globl getblk
 getblk:
 	call	svnhl
 	ld	a,c_nbuf
@@ -20,6 +21,11 @@ getblk:
 	xor	a	; a' = age
 0:
 	ex	de,hl	; de = dev
+	; skip existing seach if nodev
+	inc	h
+	dec	h
+	jr	c,2f
+	
 	; first we search for buffers
 	; that already contain desired
 	; information
@@ -79,6 +85,8 @@ getblk:
 	bit	b_delwr,(ix+buf_t.flag)
 	;call	nz,bwrite todo
 	
+	; todo: sleep if busy
+	
 	; set new flags
 	pop	hl
 	ld	(ix+buf_t.dev.high),h
@@ -88,16 +96,15 @@ getblk:
 	ld	(ix+buf_t.dev.low),l
 	ld	(ix+buf_t.flag),1<<b_busy
 	
-	; update timing
+	; update age
 	ld	c,c_nbuf
 	ld	iy,buftab
 	ld	a,(ix+buf_t.age)
 1:
 	cp	(iy+buf_t.age)
-	
-2:
+	jr	nc,2f
 	inc	(iy+buf_t.age)
-
+2:
 	ld	de,$buf_t
 	add	iy,de
 	dec	c

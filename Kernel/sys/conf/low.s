@@ -34,6 +34,7 @@ svnhl:
 ; ix = pointer to list
 ;
 ; uses: af
+.globl ixnext
 ixnext:
 	push	de
 	ld	d,ixh

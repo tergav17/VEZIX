@@ -2,8 +2,7 @@
 ; vezix core header
 
 ; low.s / top.s
-.extern t_base, b_base, svnhl, ixnext
-.extern d_top, b_top
+.extern svnhl
 
 ; blkio
-.extern binit
+.extern binit, getblk

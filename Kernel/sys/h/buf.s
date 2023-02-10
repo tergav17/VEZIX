@@ -37,3 +37,6 @@ b_done	=	0x01	; op done
 b_error	=	0x02	; op aborted
 b_busy	=	0x03	; buf is busy
 b_delwr	=	0x04	; write on use
+
+; nodev
+nodev	=	0xFF

@@ -7,6 +7,7 @@
 ; set, it is treated as available and
 ; may be reused
 .type buf_t {
+	; next must be first element
 	word_t	next,	; next buf
 
 	byte	flag,	; buffer flags

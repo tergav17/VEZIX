@@ -146,6 +146,7 @@ binit:
 ; ix = pointer to buf header
 ;
 ; uses: af
+.globl brelse
 brelse:
 	; reset the busy flag
 	res	b_busy,(ix+buf_t.flag),a
@@ -162,5 +163,4 @@ brelse:
 ; for now, these will point to the
 ; buffers in kernel memory, but this
 ; could in theory be changed
-.globl buftab
 .defl buf_t[c_nbuf] buftab

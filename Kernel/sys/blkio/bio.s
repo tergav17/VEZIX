@@ -14,17 +14,17 @@
 .globl getblk
 getblk:
 	call	svnhl
-	ld	a,c_nbuf
+	xor	a	; a' = age
 	ld	ix,buftab
 	ld	iy,0	; iy = result
 	ex	af,af'
-	xor	a	; a' = age
+	ld	a,c_nbuf
 0:
+	ex	af,af'
 	ex	de,hl	; de = dev
 	; skip existing seach if nodev
-	inc	h
-	dec	h
-	jr	c,2f
+	bit	7,d
+	jr	nz,2f
 	
 	; first we search for buffers
 	; that already contain desired
@@ -64,7 +64,6 @@ getblk:
 	add	ix,de
 	ex	af,af'
 	dec 	a
-	ex	af,af'
 	jr	nz,0b
 5:
 	; search complete
@@ -72,7 +71,7 @@ getblk:
 	push	bc
 	push	hl
 	push	iy
-	pop	ix
+	pop	ix 
 	ld	d,iyh
 	ld	e,iyl
 	xor	a
@@ -163,4 +162,5 @@ brelse:
 ; for now, these will point to the
 ; buffers in kernel memory, but this
 ; could in theory be changed
+.globl buftab
 .defl buf_t[c_nbuf] buftab

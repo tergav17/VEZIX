@@ -5,4 +5,4 @@
 .extern svnhl
 
 ; blkio
-.extern binit, getblk
+.extern binit, getblk, buftab

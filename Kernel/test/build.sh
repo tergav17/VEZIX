@@ -19,8 +19,10 @@ cd ../conf
 as_r low.s
 mv a.out obj/low.o
 as_r top.s
-ld_r -s obj/low.o obj/core.o obj/blkio.o a.out
+ld_r obj/low.o obj/core.o obj/blkio.o a.out
 echo -n "total size: "
 size_r a.out
+cp	a.out obj/vezix.o
 reloc_r -n a.out 0xC000
 mv a.out out/vezix
+z80dasm -l -g 0xC000 -o out/vezix.asm out/vezix

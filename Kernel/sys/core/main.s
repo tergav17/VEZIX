@@ -40,6 +40,13 @@ main:
 	; init subsystems
 	call	 binit
 	
+	ld	h,nodev
+	ld	bc,0
+	call	getblk
+	push	ix
+	pop	hl
+	call	kputd
+	
 	halt
 	
 	

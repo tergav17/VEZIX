@@ -50,6 +50,27 @@ ixnext:
 0:
 	pop	de
 	ret
+	
+; multiply, hl = h * e
+; h = operand
+; e = operand
+;
+; hl = result
+; uses: de, hl
+.globl mulhe
+mulhe:
+	push	be
+	ld	d,c
+	ld	l,d
+	ld	b,8
+0:
+	add	hl,hl
+	jp	nc,1f
+	add	hl,de
+1:
+	djnz	0b
+	pop	bc
+	ret
 
 
 .bss

@@ -11,6 +11,7 @@ prf_csr =	0x10
 prf_data = 	0x11
 
 .text
+
 ; kernel print string
 ; hl = pointer to string
 ;

@@ -31,7 +31,7 @@ svnhl:
 	
 ; moves forward in a linked list
 ; z will be set if pointer is null
-; ix = pointer to list
+; ix = pointer to linkable object
 ;
 ; uses: af
 .globl ixnext
@@ -50,6 +50,84 @@ ixnext:
 0:
 	pop	de
 	ret
+	
+; adds ix to a linked list
+; ix = pointer to linkable object
+; hl = pointer to list header
+;
+; uses: af, hl
+.globl ixlink
+ixlink:
+	; set ix next to null
+	xor	a
+	ld	(ix+0),a
+	ld	(ix+1),a
+
+	; see if head is null
+	cp	(hl)
+	jr	nz,2f
+	inc	hl
+	cp	(hl)
+	dec	hl
+	jr	nz,2f
+	; head is null
+	call	1f
+0:
+	inc	hl
+	inc	hl
+1:
+	; write ix to (hl)
+	ld	a,ixl
+	ld	(hl),a
+	inc	hl
+	ld	a,ixh
+	ld	(hl),a
+	dec	hl
+	ret
+2:
+	; head over to the tail
+	inc	hl
+	inc	hl
+	push	hl
+	ld	a,(hl)
+	inc	hl
+	ld	h,(hl)
+	ld	l,a
+	call	1b
+	pop	hl
+	jr	1b
+	
+
+; removes the first element from a
+; linked list and returns it
+; hl = pointer to list header
+;
+; ix = pointer to first element
+; z will bet set if list is empty
+; uses: af, hl, ix
+.globl ixunlink
+ixunlink:
+	xor	a
+	cp	(hl)
+	jr	nz,0f
+	inc	hl
+	cp	(hl)
+	dec	hl
+	ret	z
+	
+	; set (hl) to (ix)
+	ld	a,(ix+0)
+	ld	(hl),a
+	inc	hl
+	ld	a,(ix+1)
+	ld	(hl),a
+	
+	; reset z flag
+	ld	a,1
+	or	a
+	ret
+	
+	
 	
 ; multiply, hl = h * e
 ; h = operand

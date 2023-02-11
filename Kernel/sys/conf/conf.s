@@ -7,8 +7,8 @@
 ; are added to the kernel
 .globl bdevsw
 .defl bdev_t[c_nbdev] bdevsw {
-	nobdev,
-	0
+	hd8start,
+	hd8tab
 }
 
 ; character device switch

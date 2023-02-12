@@ -4,7 +4,7 @@
 ; block device entry
 .type bdev_t {
 	word_t	strat,	; dev strategy
-	word_t	devtab
+	word_t	init	; dev init
 }
 
 ; character device entry

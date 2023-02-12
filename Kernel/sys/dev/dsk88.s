@@ -1,50 +1,56 @@
-; hdsk88.s
-; altair 88-hdsk driver
+; dsk88.s
+; altair 88-dsk driver
 
 .extern ixnext, ixlink, ixunlink
 
 .text
 
-; 88-hdsk strategy call
+; 88-dsk init routine
+.globl fd8init
+fd8init:
+	ret
+
+; 88-dsk strategy call
 ; used to link in a new buffer
 ; for the driver to fullfil
 ; ix = buffer to attach
 ;
 ; uses: all
-hd8strat:
+.globl fd8strat
+fd8strat:
 	; attach buf to devtab
-	ld	hl,hd8tab.io_head
+	ld	hl,fd8tab.io_head
 	call	ixlink
 	
 	; start if not active
-	ld	a,(hd8tab.active)
+	ld	a,(fd8tab.active)
 	or	a
 	jr	z,hd8start
 	ret
 	
 	
 	
-; 88-hdsk activity start
+; 88-dsk activity start
 ; this just blocks for now, will change
 ; when interrupts get added
-hd8start:
+fd8start:
 	; return if nothing to do
-	ld	ix,hd8tab.io_next
+	ld	ix,fd8tab.io_next
 	call	ixnext
 	ret	z
 	
 	; set activity flag
 	ld	a,1
-	ld	(hd8tab.active),a
+	ld	(fd8tab.active),a
 	
 	; do stuff here
 	
 	; reset activity flag
 	xor	a
-	ld	(hd8tab.active),a
+	ld	(fd8tab.active),a
 	
 	; unlink block from device
-	ld	hl,hd8tab.io_next
+	ld	hl,fd8tab.io_next
 	call	ixunlink
 
 	; continue if there is another block to grab
@@ -54,4 +60,4 @@ hd8start:
 
 .bss
 
-.defl devtab_t[1] hd8tab
+.defl devtab_t[1] fd8tab

@@ -9,6 +9,7 @@
 
 ; character device entry
 .type cdev_t {
+	word_t	init,	; device init
 	word_t	open,	; open cdev
 	word_t	close,	; close cdev
 	word_t	read,	; read cdev

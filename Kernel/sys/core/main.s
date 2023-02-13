@@ -38,7 +38,8 @@ main:
 	call	kputs
 	
 	; init subsystems
-	call	 binit
+	call	binit
+	call	dinit
 	
 	halt
 	

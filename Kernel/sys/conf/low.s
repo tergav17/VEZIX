@@ -137,7 +137,7 @@ ixunlink:
 ; uses: de, hl
 .globl mulhe
 mulhe:
-	push	be
+	push	bc
 	ld	d,c
 	ld	l,d
 	ld	b,8

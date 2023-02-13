@@ -25,7 +25,7 @@ fd8strat:
 	; start if not active
 	ld	a,(fd8tab.active)
 	or	a
-	jr	z,hd8start
+	jr	z,fd8start
 	ret
 	
 	
@@ -35,7 +35,7 @@ fd8strat:
 ; when interrupts get added
 fd8start:
 	; return if nothing to do
-	ld	ix,fd8tab.io_next
+	ld	ix,fd8tab.io_head
 	call	ixnext
 	ret	z
 	
@@ -50,11 +50,11 @@ fd8start:
 	ld	(fd8tab.active),a
 	
 	; unlink block from device
-	ld	hl,fd8tab.io_next
+	ld	hl,fd8tab.io_head
 	call	ixunlink
 
 	; continue if there is another block to grab
-	jr	nz,hd8start
+	jr	nz,fd8start
 
 	ret
 

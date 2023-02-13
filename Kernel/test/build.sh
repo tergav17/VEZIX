@@ -3,17 +3,21 @@ cd ../sys/conf
 # build system components
 cd ../core
 echo "\tbuilding core..."
-as_r -v ../conf/header.s ../h/buf.s ../conf/core.s *.s
+as_r -v ../conf/header.s ../h/buf.s core.s main.s prf.s
 echo -n "core size: "
 size_r a.out
 mv a.out ../conf/obj/core.o
 
 cd ../blkio
 echo "\tbuilding blkio..."
-as_r -v ../conf/header.s ../h/buf.s ../conf/blkio.s *.s
+as_r -v ../conf/header.s ../h/buf.s ../h/dev.s blkio.s bio.s
 echo -n "blkio size: "
 size_r a.out
 mv a.out ../conf/obj/blkio.o
+
+# build devices
+cd ../dev
+as_r ../conf/header.s ../h/buf.s dsk88.s ; mv a.out ../conf/obj/dsk88.o
 
 # build special components
 cd ../conf
@@ -26,7 +30,7 @@ mv a.out obj/top.o
 as_r header.s ../h/dev.s conf.s
 mv a.out obj/conf.o
 cd obj
-ld_r low.o core.o blkio.o conf.o top.o
+ld_r -v low.o core.o blkio.o conf.o dsk88.o top.o
 mv a.out ../out/vezix.o
 
 # post process

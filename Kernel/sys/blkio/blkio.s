@@ -3,3 +3,6 @@
 
 ; low.s / top.s
 .extern svnhl
+
+; conf.s
+.extern bdevsw, cdevsw

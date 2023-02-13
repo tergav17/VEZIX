@@ -4,12 +4,11 @@
 ; block device entry
 .type bdev_t {
 	word_t	strat,	; dev strategy
-	word_t	init	; dev init
+	word_t	devtab 	; dev table
 }
 
 ; character device entry
 .type cdev_t {
-	word_t	init,	; device init
 	word_t	open,	; open cdev
 	word_t	close,	; close cdev
 	word_t	read,	; read cdev

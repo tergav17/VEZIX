@@ -143,49 +143,6 @@ binit:
 	dec	c
 	jr	nz,0b
 	ret
-	
-	
-; dev init
-;
-; uses: all
-.globl dinit
-dinit:	
-	; init devices, start with bdev
-	ld	a,c_nbdev
-	ld	bc,bdevsw + bdev_t.init
-0:
-	call	2f
-	ld	hl,$bdev_t
-	add	hl,bc
-	ld	b,h
-	ld	c,l
-	dec	a
-	jr	nz,0b
-	
-	; init cdev
-	ld	a,c_ncdev
-	ld	bc,cdevsw + cdev_t.init
-1:
-	call	2f
-	ld	hl,$cdev_t
-	add	hl,bc
-	ld	b,h
-	ld	c,l
-	dec	a
-	jr	nz,1b
-	ret
-	
-2:
-	call	svnhl
-	ld	h,b
-	ld	l,c
-	ld	d,(hl)
-	inc	hl
-	ld	h,(hl)
-	ld	l,d
-	jp	(hl)
-	
-	
 
 
 

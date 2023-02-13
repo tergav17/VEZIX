@@ -1,15 +1,15 @@
 ; conf.s
 ; vezix device configuration
 
-.extern fd8strat, fd8init
+.extern shdstrat, shdinit
 
 ; block device switch
 ; this is where block device drivers
 ; are added to the kernel
 .globl bdevsw
 .defl bdev_t[c_nbdev] bdevsw {
-	fd8strat,
-	fd8init
+	shdstrat,
+	shdinit
 }
 
 ; character device switch

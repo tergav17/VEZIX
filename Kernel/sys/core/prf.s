@@ -16,6 +16,7 @@ prf_data = 	0x11
 ; hl = pointer to string
 ;
 ; uses: hl, iy
+.globl kputs
 kputs:
 	call	svnhl
 0:
@@ -31,6 +32,7 @@ kputs:
 ; hl = value to print
 ;
 ; uses: hl, iy
+.globl kputd
 kputd:
 	call	svnhl
 	ld	d,'0'

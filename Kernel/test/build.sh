@@ -17,7 +17,7 @@ mv a.out ../conf/obj/blkio.o
 
 # build devices
 cd ../dev
-as_r ../conf/header.s ../h/buf.s dsk88.s ; mv a.out ../conf/obj/dsk88.o
+as_r ../conf/header.s ../h/buf.s shd.s ; mv a.out ../conf/obj/shd.o
 
 # build special components
 cd ../conf
@@ -30,7 +30,7 @@ mv a.out obj/top.o
 as_r header.s ../h/dev.s conf.s
 mv a.out obj/conf.o
 cd obj
-ld_r -v low.o core.o blkio.o conf.o dsk88.o top.o
+ld_r -v low.o core.o blkio.o conf.o shd.o top.o
 mv a.out ../out/vezix.o
 
 # post process

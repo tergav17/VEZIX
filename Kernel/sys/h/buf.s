@@ -12,7 +12,7 @@
 
 	byte	flag,	; buffer flags
 	byte	serial,
-	byte	scount	; sector count
+	byte	scount,	; sector count
 	byte	age,	; buffer age
 	word_t	addr,	; buf core addr
 	word_t	blkno,	; blk # on dev

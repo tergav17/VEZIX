@@ -3,6 +3,30 @@
 
 .text
 
+; reads a block (if needed) and
+; returns a pointer to it
+; hl = dev
+; bc = blkno
+;
+; ix = pointer to buffer
+; uses: all
+.globl bread
+bread:
+	call	getblk
+	bit	b_done,(ix+buf_t.flag)
+	ret	nz
+	set	b_read,(ix+buf_t.flag)
+	ld	e,(ix+buf_t.dev.high)
+	ld	h,$bdev_t
+	call	mulhe
+	ld	de,bdevsw + bdev_t.strat
+	add	hl,de
+	call	0f
+	; todo: iowait
+	ret
+0:
+	jp	(hl)
+
 ; get block, if the appropriate block
 ; already exists, then return it.
 ; otherwise free a block and return it
@@ -43,7 +67,8 @@ getblk:
 	; found blk in use
 	push	ix
 	pop	iy
-	jr	5f
+	; todo: sleep if busy
+	jr	7f
 2:
 	; skip if busy
 	bit	b_busy,(ix+buf_t.flag)
@@ -77,15 +102,13 @@ getblk:
 	ld	e,iyl
 	xor	a
 	cp	d
-	jr	nz,0f
+	jr	nz,6f
 	cp	e
 	; jp	panic todo
-0:
+6:
 	; write out if delwr
 	bit	b_delwr,(ix+buf_t.flag)
 	;call	nz,bwrite todo
-	
-	; todo: sleep if busy
 	
 	; set new flags
 	pop	hl
@@ -95,7 +118,8 @@ getblk:
 	ld	(ix+buf_t.dev.high),h
 	ld	(ix+buf_t.dev.low),l
 	ld	(ix+buf_t.flag),1<<b_busy
-	
+
+7:
 	; update age
 	ld	c,c_nbuf
 	ld	iy,buftab

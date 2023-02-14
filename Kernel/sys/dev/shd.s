@@ -42,8 +42,8 @@ shdinit:
 ; uses: all
 .globl shdstrat
 shdstrat:
-	; number of sectors to transfer is 4
-	ld	a,4
+	; reset transferred sector counter
+	xor	a
 	ld	(ix+buf_t.scount),a
 
 	; attach buf to devtab
@@ -85,7 +85,60 @@ shdstart:
 	ld	a,(ix+buf_t.dev.low)
 	ld	(parblk.hd),a
 
+	; calculate sector
+	ld	a,(ix+buf_t.blkno.low)
+	and	0x07
+	rlca
+	rlca
+	or	(ix+buf_t.scount)
+	ld	(parblk.sector),a
 	
+	; calculate track
+	ld	(ix+buf_t.blkno.high),h
+	ld	(ix+buf_t.blkno.low),l
+	ld	a,l
+	srl	h
+	rra
+	srl	h
+	rra
+	srl	h
+	rra
+	ld	l,a
+	ld	(parblk.track),hl
+	
+	; set dma location
+	ld	(ix+buf_t.addr.high),h
+	ld	(ix+buf_t.addr.low),l
+	ld	a,(ix+buf_t.scount)
+	or	a
+0:
+	jr	z,1f
+	ld	de,128
+	add	hl,de
+	jr	0b
+1:
+	ld	(parblk.dma),hl
+	
+	; execute command
+	ld	b,$simhd_t
+	ld	hl,parblk
+0:
+	ld	a,(hl)
+	out	(h_port),a
+	inc	hl
+	dec	b
+	jr	nz,0b
+	in	a,(h_port)
+	; todo: set error bits
+	
+	; increment scount
+	ld	a,4
+	inc	(ix+buf_t.scount)
+	cp	(ix+buf_t.scount)
+	jr	nz,shdstart
+	
+	; end of stuff
+9:
 	
 	; reset activity flag
 	xor	a
@@ -94,6 +147,8 @@ shdstart:
 	; unlink block from device
 	ld	hl,shdtab.io_head
 	call	ixunlink
+	
+	; todo: call iodone
 
 	; continue if there is another block to grab
 	jr	nz,shdstart

@@ -6,6 +6,7 @@
 .extern main
 
 .text
+
 .globl t_base
 t_base:
 	jp	main	; system entry point

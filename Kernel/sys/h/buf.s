@@ -42,4 +42,4 @@ b_busy	=	0x03	; buf is busy
 b_delwr	=	0x04	; write on use
 
 ; nodev
-nodev	=	0xFFFF
+nodev	=	0xffff

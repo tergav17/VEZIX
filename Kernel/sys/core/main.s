@@ -38,25 +38,9 @@ main:
 	call	kputs
 	
 	; init subsystems
-	call	binit
-	call	dinit
-	
-	ld	hl,str_flag
-	call	kputs
-	
-	; read a block
-	ld	hl,0x0000 ; dev 0,0
-	ld	bc,0x0002 ; block #2
-	call	bread
-	call	brelse
-	
-	ld	hl,0x0000
-	ld	bc,0x0002
-	call	getblk
-	
-	ld	h,0
-	ld	l,(ix+buf_t.serial)
-	call	kputd
+	call	binit	; buf init
+	call	dinit	; device init
+	call	iinit	; mount root
 	
 	halt
 	
@@ -65,6 +49,5 @@ main:
 .defl byte str_vez	"vezix boot"
 .defl byte str_crlf	"\n\r\0"
 .defl byte str_mem	"mem = \0"
-.defl byte str_flag	"flag\n\r\0"
 
 	

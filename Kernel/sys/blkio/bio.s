@@ -110,7 +110,7 @@ getblk:
 	cp	d
 	jr	nz,6f
 	cp	e
-	; jp	panic todo
+	call	z,panic
 6:
 	; write out if delwr
 	bit	b_delwr,(ix+buf_t.flag)

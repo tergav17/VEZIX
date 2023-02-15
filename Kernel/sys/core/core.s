@@ -6,3 +6,6 @@
 
 ; blkio
 .extern binit, dinit, getblk, brelse, bread
+
+; fs
+.extern iinit

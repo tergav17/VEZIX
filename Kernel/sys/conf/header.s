@@ -9,8 +9,12 @@
 c_utop 	=	t_base	; uspace top
 c_ubase =	0x0000  ; uspace base
 
-; buffer config
+; data structure config
 c_nbuf	=	6	; # of buffers
+c_nmnt	=	4	; # of mounts
+
+; boot config
+c_rootd	=	0x0000	; root device
 
 ; device config constants
 c_nbdev	=	1	; # of blk devs

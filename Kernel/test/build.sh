@@ -15,6 +15,13 @@ echo -n "blkio size: "
 size_r a.out
 mv a.out ../conf/obj/blkio.o
 
+cd ../fs
+echo "\tbuilding fs..."
+as_r -v ../conf/header.s ../h/buf.s ../h/filsys.s fs.s alloc.s
+echo -n "fs size: "
+size_r a.out
+mv a.out ../conf/obj/fs.o
+
 # build devices
 cd ../dev
 as_r ../conf/header.s ../h/buf.s shd.s ; mv a.out ../conf/obj/shd.o
@@ -30,7 +37,7 @@ mv a.out obj/top.o
 as_r header.s ../h/dev.s conf.s
 mv a.out obj/conf.o
 cd obj
-ld_r -v low.o core.o blkio.o conf.o shd.o top.o
+ld_r -v low.o core.o blkio.o fs.o conf.o shd.o top.o
 mv a.out ../out/vezix.o
 
 # post process

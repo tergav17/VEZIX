@@ -7,5 +7,5 @@
 ; conf.s
 .extern bdevsw
 
-; core.s
-.extern kputd
+; core
+.extern panic

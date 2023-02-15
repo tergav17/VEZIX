@@ -71,7 +71,21 @@ kputc:
 	ld	a,b
 	out	(prf_data),a	; write character
 	ret
-
+	
+; print panic and loop
+;
+; uses: n/a
+.globl panic
+panic:
+	ld	hl,str_panc
+	call	kputs
+	pop	hl
+	call	kputd
+0:
+	di
+	halt
+	jr	0b
+	
 
 ; init prf
 ;
@@ -82,3 +96,7 @@ kinit:
 	ld	a,0x15
 	out	(prf_csr),a	; config i/o
 	ret
+	
+.data
+
+.defl byte str_panc	"panic \0"

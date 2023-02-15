@@ -5,4 +5,4 @@
 .extern svnhl
 
 ; blkio
-.extern binit, dinit, getblk, brelse
+.extern binit, dinit, getblk, brelse, bread

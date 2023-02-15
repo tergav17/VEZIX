@@ -21,7 +21,13 @@ bread:
 	call	mulhe
 	ld	de,bdevsw + bdev_t.strat
 	add	hl,de
+	ld	a,(hl)
+	inc	hl
+	ld	h,(hl)
+	ld	l,a
+	push	ix
 	call	0f
+	pop	ix
 	; todo: iowait
 	ret
 0:
@@ -115,8 +121,8 @@ getblk:
 	ld	(ix+buf_t.dev.high),h
 	ld	(ix+buf_t.dev.low),l
 	pop	hl
-	ld	(ix+buf_t.dev.high),h
-	ld	(ix+buf_t.dev.low),l
+	ld	(ix+buf_t.blkno.high),h
+	ld	(ix+buf_t.blkno.low),l
 	ld	(ix+buf_t.flag),1<<b_busy
 
 7:

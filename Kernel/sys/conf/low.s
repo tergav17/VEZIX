@@ -138,7 +138,7 @@ ixunlink:
 .globl mulhe
 mulhe:
 	push	bc
-	ld	d,c
+	ld	d,0
 	ld	l,d
 	ld	b,8
 0:

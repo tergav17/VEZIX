@@ -41,6 +41,18 @@ main:
 	call	binit
 	call	dinit
 	
+	ld	hl,str_flag
+	call	kputs
+	
+	; read a block
+	ld	hl,0x0000
+	ld	bc,0x0002
+	call	bread
+	
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
+	call	kputd
+	
 	halt
 	
 	
@@ -48,5 +60,6 @@ main:
 .defl byte str_vez	"vezix boot"
 .defl byte str_crlf	"\n\r\0"
 .defl byte str_mem	"mem = \0"
+.defl byte str_flag	"flag\n\r\0"
 
 	

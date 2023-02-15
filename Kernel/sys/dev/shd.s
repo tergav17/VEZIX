@@ -94,8 +94,8 @@ shdstart:
 	ld	(parblk.sector),a
 	
 	; calculate track
-	ld	(ix+buf_t.blkno.high),h
-	ld	(ix+buf_t.blkno.low),l
+	ld	h,(ix+buf_t.blkno.high)
+	ld	l,(ix+buf_t.blkno.low)
 	ld	a,l
 	srl	h
 	rra
@@ -107,14 +107,15 @@ shdstart:
 	ld	(parblk.track),hl
 	
 	; set dma location
-	ld	(ix+buf_t.addr.high),h
-	ld	(ix+buf_t.addr.low),l
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
 	ld	a,(ix+buf_t.scount)
 	or	a
 0:
 	jr	z,1f
 	ld	de,128
 	add	hl,de
+	dec	a
 	jr	0b
 1:
 	ld	(parblk.dma),hl

@@ -45,12 +45,17 @@ main:
 	call	kputs
 	
 	; read a block
+	ld	hl,0x0000 ; dev 0,0
+	ld	bc,0x0002 ; block #2
+	call	bread
+	call	brelse
+	
 	ld	hl,0x0000
 	ld	bc,0x0002
-	call	bread
+	call	getblk
 	
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
+	ld	h,0
+	ld	l,(ix+buf_t.serial)
 	call	kputd
 	
 	halt

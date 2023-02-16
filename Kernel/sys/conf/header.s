@@ -8,6 +8,7 @@
 ; memory map config
 c_utop 	=	t_base	; uspace top
 c_ubase =	0x0000  ; uspace base
+c_ksize	=	64	; kstack size
 
 ; data structure config
 c_nbuf	=	6	; # of buffers
@@ -25,4 +26,9 @@ c_ncdev	=	1	; # of chr devs
 .type word_t {
 	byte	low,
 	byte	high
+}
+
+.type long_t {
+	word_t	low,
+	word_t	high
 }

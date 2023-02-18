@@ -6,8 +6,8 @@
 .text
 .globl main
 main:
-	; place stack in uspace top
-	ld	sp,c_utop
+	; place stack in kstack
+	ld	sp,k_stack+c_ksize
 	
 	; clear kernel memory
 	xor	a
@@ -43,7 +43,9 @@ main:
 	call	iinit	; mount root
 	
 	halt
-	
+
+.bss
+.defl byte[c_ksize] k_stack
 	
 .data
 .defl byte str_vez	"vezix boot"

@@ -9,9 +9,10 @@
 ; bc = blkno
 ;
 ; ix = pointer to buffer
-; uses: all
+; saved: af, bc, de
 .globl bread
 bread:
+	call	svnhl
 	call	getblk
 	bit	b_done,(ix+buf_t.flag)
 	ret	nz

@@ -17,7 +17,7 @@ mv a.out ../conf/obj/blkio.o
 
 cd ../fs
 echo "\tbuilding fs..."
-as_r -v ../conf/header.s ../h/buf.s ../h/filsys.s fs.s alloc.s
+as_r -v ../conf/header.s ../h/buf.s ../h/filsys.s fs.s alloc.s iget.s
 echo -n "fs size: "
 size_r a.out
 mv a.out ../conf/obj/fs.o

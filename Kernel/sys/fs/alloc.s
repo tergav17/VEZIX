@@ -46,10 +46,10 @@ iinit:
 	
 .bss
 
-.globl mount 
-
 ; mount structrues
+.globl mount 
 .defl mount_t[c_nmnt] mount
 
 ; core inode structure
-.defl cinode_t[c_nino] inode
+.globl inode
+.defl cino_t[c_nino] inode

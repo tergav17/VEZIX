@@ -13,7 +13,7 @@
 ; on disk inode for fuzix file system
 ; this structure is 64 bytes long, so
 ; 8 inodes can fit in a disk block
-.type dinode_t {
+.type dino_t {
 	; file mode
 	word_t	mode,
 	
@@ -38,16 +38,16 @@
 
 ; in core inode structure
 ; superset of dinode
-.type cinode_t {
+.type cino_t {
 	; on-disk inode
-	dinode_t node,
+	dino_t node,
 	
 	; inode flags
 	byte	flag,
 	
 	; device and inumber
 	word_t	dev,
-	word_t	number,
+	word_t	num,
 	
 	; reference count
 	byte	count

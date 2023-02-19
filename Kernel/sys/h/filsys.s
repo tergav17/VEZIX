@@ -35,3 +35,20 @@
 	; blocks used by inode
 	word_t[20] addr
 }
+
+; in core inode structure
+; superset of dinode
+.type cinode_t {
+	; on-disk inode
+	dinode_t node,
+	
+	; inode flags
+	byte	flag,
+	
+	; device and inumber
+	word_t	dev,
+	word_t	number,
+	
+	; reference count
+	byte	count
+}

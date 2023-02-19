@@ -13,6 +13,7 @@ c_ksize	=	64	; kstack size
 ; data structure config
 c_nbuf	=	6	; # of buffers
 c_nmnt	=	4	; # of mounts
+c_nino	=	20	; # of inodes
 
 ; boot config
 c_rootd	=	0x0000	; root device

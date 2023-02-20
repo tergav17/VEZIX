@@ -43,7 +43,7 @@ main:
 	call	iinit	; mount root
 	
 	ld	hl,c_rootd
-	ld	bc,1
+	ld	bc,51
 	call	iget
 	
 	push	ix

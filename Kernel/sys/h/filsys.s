@@ -7,7 +7,7 @@
 .type mount_t {
 	word_t	dev, 	; mount device
 	word_t	buf, 	; super block
-	word_t	inode 	; mount inode
+	word_t	ino	; mount inode
 }
 
 ; on disk inode for fuzix file system
@@ -52,3 +52,15 @@
 	; reference count
 	byte	count
 }
+
+
+; flags
+i_lock	=	1
+i_drty	=	2
+i_acc	=	3
+i_mnt	= 	4
+i_want	=	5
+
+
+; constants
+rootino	=	1

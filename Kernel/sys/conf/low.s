@@ -115,7 +115,7 @@ ixunlink:
 	cp	(hl)
 	dec	hl
 	ret	z
-	
+0:
 	; set (hl) to (ix)
 	ld	a,(ix+0)
 	ld	(hl),a

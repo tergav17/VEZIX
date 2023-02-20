@@ -23,10 +23,12 @@ iget:
 	; check if dev / number match
 	ld	h,(ix+cino_t.dev.high)
 	ld	l,(ix+cino_t.dev.low)
+	or	a
 	sbc	hl,de
 	jr	nz,1f
 	ld	h,(ix+cino_t.num.high)
 	ld	l,(ix+cino_t.num.low)
+	or	a
 	sbc	hl,bc
 	jr	nz,1f
 	; todo check mount and ret
@@ -42,6 +44,10 @@ iget:
 	pop	iy
 2:
 	ex	af,af'
+	ld	hl,$cino_t
+	ex	de,hl
+	add	ix,de
+	ex	de,hl
 	dec	a
 	jr	nz,0b
 	

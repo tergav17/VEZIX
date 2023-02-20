@@ -42,6 +42,14 @@ main:
 	call	dinit	; device init
 	call	iinit	; mount root
 	
+	ld	hl,c_rootd
+	ld	bc,1
+	call	iget
+	
+	push	ix
+	pop	hl
+	call	kputd
+	
 	halt
 
 .bss

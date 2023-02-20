@@ -55,11 +55,28 @@
 
 
 ; flags
-i_lock	=	1
-i_drty	=	2
-i_acc	=	3
-i_mnt	= 	4
-i_want	=	5
+i_lock	=	0
+i_drty	=	1
+i_acc	=	2
+i_mnt	= 	3
+i_want	=	4
+
+; modes
+m_oex	=	0
+m_owr	=	1
+m_ord	=	2
+m_gex	=	3
+m_gwr	=	4
+m_grd	=	5
+m_uex	=	6
+m_uwr	=	7
+
+m_urd	=	0
+m_gid	=	1
+m_uid	=	2
+m_dev	=	4
+m_dir	=	5
+
 
 
 ; constants

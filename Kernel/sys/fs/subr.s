@@ -10,6 +10,7 @@
 ; ix = inode
 ; 
 ; hl = disk blkno
+; ix = inode
 ; uses: iy
 .globl bmap
 bmap:
@@ -49,5 +50,5 @@ bmap:
 	ret
 	
 9:
-	
+	; indirect block
 	ret

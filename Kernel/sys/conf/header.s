@@ -33,3 +33,7 @@ c_ncdev	=	1	; # of chr devs
 	word_t	low,
 	word_t	high
 }
+
+
+; constants
+rootino	=	1

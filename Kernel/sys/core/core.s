@@ -8,4 +8,4 @@
 .extern binit, dinit, getblk, brelse, bread
 
 ; fs
-.extern iinit, iget
+.extern iinit, iget, bmap

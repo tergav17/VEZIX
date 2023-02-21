@@ -43,14 +43,24 @@ main:
 	call	iinit	; mount root
 	
 	ld	hl,c_rootd
-	ld	bc,51
+	ld	bc,rootino
 	call	iget
 	
-	push	ix
-	pop	hl
+	ld	hl,0
+	call	bmap
+	
+	ld	b,h
+	ld	c,l
+	ld	h,(ix+cino_t.dev.high)
+	ld	l,(ix+cino_t.dev.low)
 	call	kputd
 	
 	halt
+	call	getblk
+	
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
+	
 
 .bss
 .defl byte[c_ksize] k_stack

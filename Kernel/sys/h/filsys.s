@@ -76,8 +76,3 @@ m_gid	=	1
 m_uid	=	2
 m_dev	=	4
 m_dir	=	5
-
-
-
-; constants
-rootino	=	1

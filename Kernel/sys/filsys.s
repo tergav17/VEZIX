@@ -33,7 +33,9 @@
 	long_t	ctime,
 	
 	; blocks used by inode
-	word_t[20] addr
+	word_t[18] addr,
+	word_t	sindr,
+	word_t	dindr
 }
 
 ; in core inode structure

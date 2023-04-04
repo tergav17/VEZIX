@@ -35,5 +35,5 @@ c_ncdev	=	1	; # of chr devs
 }
 
 
-; constants
+; constants (do not modify)
 rootino	=	1

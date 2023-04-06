@@ -46,20 +46,20 @@ main:
 	ld	bc,rootino
 	call	iget
 	
-	ld	hl,0
-	call	bmap
+	;ld	hl,0
+	;call	bmap
 	
-	ld	b,h
-	ld	c,l
-	ld	h,(ix+cino_t.dev.high)
-	ld	l,(ix+cino_t.dev.low)
-	call	kputd
+	;ld	b,h
+	;ld	c,l
+	;ld	h,(ix+cino_t.dev.high)
+	;ld	l,(ix+cino_t.dev.low)
+	;call	kputd
+	
+	ld	hl,main
+	ld	bc,64
+	call	kdump
 	
 	halt
-	call	getblk
-	
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
 	
 
 .bss

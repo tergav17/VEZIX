@@ -12,6 +12,87 @@ prf_data = 	0x11
 
 .text
 
+; kernel dump memory
+; hl = start of memory
+; bc = number of bytes
+;
+; uses: hl, iy
+.globl kdump
+kdump:
+.if c_hdump
+	ld	d,b	; de = bc
+	ld	e,c
+	call	svnhl
+	
+0:	ld	c,16
+	ld	b,'\n'
+	call	kputc
+	ld	b,'\r'
+	call	kputc
+	push	hl
+	call	kputw
+	ld	b,':'
+	call	kputc
+	pop	hl
+	
+1:	ld	b,0x20
+	call	kputc
+	push	hl
+	ld	h,(hl)
+	call	kputb
+	pop	hl
+	inc	hl
+	dec	de
+	ld	a,d
+	or	e
+	ret	z
+	dec	c
+	jr	nz,1b
+	jr	0b
+.endif
+	ret
+
+; kernel print hex word
+; hl = word to print
+;
+; uses: hl, iy
+.globl kputw
+kputw:
+.if c_hdump
+	push	hl
+	call	kputb
+	pop	hl
+	ld	h,l
+	
+	; fall to kputb
+.endif
+
+; kernel print hex byte
+; h = byte to print
+;
+; uses: hl, iy
+.globl kputb
+kputb:
+.if c_hdump
+	call	svnhl
+	ld	a,h
+	rra
+	rra
+	rra
+	rra
+	call	0f
+	ld	a,h
+0:	and	0x0f
+	add	a,'0'
+	cp	'0'+10
+	jr	c,1f
+	add	a,'a'-('0'+10)
+1:	ld	b,a
+	call	kputc
+.endif
+	ret
+
+
 ; kernel print string
 ; hl = pointer to string
 ;

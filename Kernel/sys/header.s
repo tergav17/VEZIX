@@ -22,8 +22,14 @@ c_rootd	=	0x0000	; root device
 c_nbdev	=	1	; # of blk devs
 c_ncdev	=	1	; # of chr devs
 
-; common data structures
+; debugging
+c_hdump	=	1	; allow hex dumps
 
+
+
+; --- end of user configuration ---
+
+; common data structures
 .type word_t {
 	byte	low,
 	byte	high

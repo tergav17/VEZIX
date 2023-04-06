@@ -1,6 +1,7 @@
 ; conf.s
 ; vezix device configuration
 
+.extern jphl
 .extern shdstrat, shdinit, shdtab
 
 ; device init bus
@@ -11,8 +12,20 @@
 ; uses: all
 .globl dinit
 dinit:
-	call shdinit
+	ld	hl,bdevsw + bdev_t.init
+	ld	b,c_nbdev
+0:	push	hl
+	push	bc
+	ld	a,(hl)
+	inc	hl
+	ld	h,(hl)
+	ld	l,a
+	call	jphl
+	pop	bc
+	pop	hl
+	djnz	0b
 	ret
+	
 
 
 ; block device switch
@@ -20,6 +33,7 @@ dinit:
 ; are added to the kernel
 .globl bdevsw
 .defl bdev_t[c_nbdev] bdevsw {
+	shdinit,
 	shdstrat,
 	shdtab
 }

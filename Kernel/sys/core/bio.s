@@ -27,12 +27,10 @@ bread:
 	ld	h,(hl)
 	ld	l,a
 	push	ix
-	call	0f
+	call	jphl
 	pop	ix
 	; todo: iowait
 	ret
-0:
-	jp	(hl)
 
 ; get block, if the appropriate block
 ; already exists, then return it.

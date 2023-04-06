@@ -2,7 +2,7 @@
 ; vezix blkio header
 
 ; low.s / top.s
-.extern svnhl, mulhe
+.extern svnhl, mulhe, jphl
 
 ; conf.s
 .extern bdevsw

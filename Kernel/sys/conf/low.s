@@ -151,6 +151,12 @@ mulhe:
 	pop	bc
 	ret
 
+; jumps to (hl)
+; useful for calling (hl)
+.globl jphl
+jphl:
+	jp	(hl)
+
 
 .bss
 .globl b_base

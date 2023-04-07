@@ -20,9 +20,9 @@ prf_data = 	0x11
 .globl kdump
 kdump:
 .if c_hdump
+	call	svnhl
 	ld	d,b	; de = bc
 	ld	e,c
-	call	svnhl
 	
 0:	ld	c,16
 	ld	b,'\n'

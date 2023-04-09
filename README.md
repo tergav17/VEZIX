@@ -17,7 +17,7 @@ Of the three design constraints, I feel the last one is the most challenging. An
     - [X] Write misc tools like `strip`, `nm`, `size`
 - [ ] Create the kernel
     - [X] Write simple kernel debug routines (`prf.s`)
-    - [ ] Get buffers and block I/O working
+    - [X] Get buffers and block I/O working
     - [ ] Get basic file system stuff working (Probably using the UZIX file system)
     - [ ] Simple process execution and swapping
     - [ ] Expand on file system, and implement character devices

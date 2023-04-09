@@ -24,7 +24,7 @@ Of the three design constraints, I feel the last one is the most challenging. An
     - [ ] Expand on processes, and start adding syscalls
     - [ ] Pipes? Not necessarily required but it would be nice
 - [ ] Userland
-    - [ ] Modify the Small C Plus compiler to produce assembly that can be built with TRASM
+    - [ ] Modify the Small C Plus (maybe BDS C?) compiler to produce assembly that can be built with TRASM
     - [ ] Use compiler to bring over standard utilities from Version 6 UNIX and UZIX
     - [ ] Rewrite the toolchain in assembly so it can run natively
     - [ ] Break the compiler up into multiple pieces, as to reduce the memory footprint (easier said than done!)

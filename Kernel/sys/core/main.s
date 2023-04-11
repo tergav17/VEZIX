@@ -42,9 +42,9 @@ main:
 	call	dinit	; device init
 	call	iinit	; mount root
 	
-	;ld	hl,c_rootd
-	;ld	bc,rootino
-	;call	iget
+	ld	hl,c_rootd
+	ld	bc,rootino
+	call	iget
 	
 	;ld	hl,0
 	;call	bmap
@@ -55,14 +55,12 @@ main:
 	;ld	l,(ix+cino_t.dev.low)
 	;call	kputd
 	
-	ld	hl,c_rootd
-	ld	bc,1
-	call	bread
+
+	ld	d,ixh
+	ld	e,ixl
+	ex	de,hl
 	
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
-	
-	ld	bc,64
+	ld	bc,$cino_t
 	call	kdump
 	
 	halt

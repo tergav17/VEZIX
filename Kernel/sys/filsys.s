@@ -42,7 +42,7 @@
 ; superset of dinode
 .type cino_t {
 	; on-disk inode
-	dino_t node,
+	dino_t	node,
 	
 	; inode flags
 	byte	flag,

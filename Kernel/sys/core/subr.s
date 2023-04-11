@@ -9,7 +9,7 @@
 ; hl = inode blkno
 ; ix = inode
 ; 
-; hl = disk blkno
+; bc = disk blkno
 ; ix = inode
 ; uses: iy
 .globl bmap
@@ -26,24 +26,21 @@ bmap:
 	jr	nc,9f
 	
 	; get the directly mapped block
-	sla	h
+	sla	l
 	ld	de,cino_t.node.addr
 	add	hl,de
 	ld	d,ixh
 	ld	e,ixl
 	add	hl,de
 	
-	; hl=(hl)
-	ld	a,(hl)
+	; bc=(hl)
+	ld	b,(hl)
 	inc	hl
-	ld	h,(hl)
-	ld	l,a
+	ld	c,(hl)
 	
 	; return if not zero
-	or	a
-	ret	nz
-	ld	a,h
-	or	a
+	ld	a,b
+	or	c
 	ret	nz
 	
 	; todo allocate block

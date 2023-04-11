@@ -9,7 +9,7 @@
 ; hl = inode blkno
 ; ix = inode
 ; 
-; bc = disk blkno
+; hl = disk blkno
 ; ix = inode
 ; uses: iy
 .globl bmap
@@ -33,14 +33,14 @@ bmap:
 	ld	e,ixl
 	add	hl,de
 	
-	; bc=(hl)
-	ld	b,(hl)
+	; hl=(hl)
+	ld	a,(hl)
 	inc	hl
-	ld	c,(hl)
+	ld	h,(hl)
+	ld	l,a
 	
 	; return if not zero
-	ld	a,b
-	or	c
+	or	h
 	ret	nz
 	
 	; todo allocate block

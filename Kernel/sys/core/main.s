@@ -46,21 +46,19 @@ main:
 	ld	bc,rootino
 	call	iget
 	
-	;ld	d,ixh
-	;ld	e,ixl
-	;ex	de,hl
-	;ld	bc,$cino_t
-	;call	kdump
+	ld	d,ixh
+	ld	e,ixl
+	ex	de,hl
+	ld	bc,$cino_t
+	call	kdump
 	
 	ld	hl,0
 	call	bmap
 	
-	ld	h,b
-	ld	l,c
-	call	kputw
-	
-	;ld	hl,c_rootd
-	;call	bread
+	ld	b,h
+	ld	c,l
+	ld	hl,c_rootd
+	call	bread
 	
 	;ld	b,h
 	;ld	c,l
@@ -69,10 +67,10 @@ main:
 	;call	kputd
 	
 
-	;ld	h,(ix+buf_t.addr.high)
-	;ld	l,(ix+buf_t.addr.low)
-	;ld	bc,512
-	;call	kdump
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
+	ld	bc,512
+	call	kdump
 	
 	halt
 	

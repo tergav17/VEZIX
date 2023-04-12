@@ -2,7 +2,7 @@
 ; vezix fs header
 
 ; low.s / top.s
-.extern svnhl, mulhe
+.extern svnhl, mulhe, jphl
 
 ; blkio
 .extern bread, getblk, brelse

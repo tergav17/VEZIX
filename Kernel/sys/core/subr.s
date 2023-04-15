@@ -94,18 +94,18 @@ pchar:
 	ret
 	
 ; returns next character from string
-; pointed to byte u_dirp
+; pointed to byte u.dirp from kernel
+; memory
 .globl schar
 schar:
-	ld	hl,(u_dirp)
+	push	hl
+	ld	hl,(u+u_t.dirp)
 	ld	a,(hl)
 	inc	hl
+	ld	(u+u_t.dirp),hl
+	pop	hl
 	ret
 
 	
 .bss
 .defl word pfunc
-
-; temporary, will be part of user area sometime
-.globl u_dirp
-.defl word u_dirp

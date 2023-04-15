@@ -8,4 +8,4 @@
 .extern bread, getblk, brelse
 
 ; core
-.extern panic
+.extern panic, u

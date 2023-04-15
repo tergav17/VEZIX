@@ -3,19 +3,19 @@ cd ../sys/conf
 # build system components
 cd ../core
 echo "\tbuilding core..."
-as_r -v ../header.s ../buf.s ../filsys.s ../user.s core.s main.s prf.s
+as_r -v ../header.s ../buf.s ../filsys.s ../user.s h/core.s main.s prf.s
 echo -n "core size: "
 size_r a.out
 mv a.out ../conf/obj/core.o
 
 echo "\tbuilding blkio..."
-as_r -v ../header.s ../buf.s ../dev.s blkio.s bio.s
+as_r -v ../header.s ../buf.s ../dev.s h/blkio.s bio.s
 echo -n "blkio size: "
 size_r a.out
 mv a.out ../conf/obj/blkio.o
 
 echo "\tbuilding fs..."
-as_r -v ../header.s ../buf.s ../filsys.s fs.s alloc.s iget.s subr.s
+as_r -v ../header.s ../buf.s ../filsys.s h/fs.s alloc.s iget.s subr.s
 echo -n "fs size: "
 size_r a.out
 mv a.out ../conf/obj/fs.o

@@ -3,7 +3,7 @@ cd ../sys/conf
 # build system components
 cd ../core
 echo "\tbuilding core..."
-as_r -v ../header.s ../buf.s ../filsys.s core.s main.s prf.s
+as_r -v ../header.s ../buf.s ../filsys.s ../user.s core.s main.s prf.s
 echo -n "core size: "
 size_r a.out
 mv a.out ../conf/obj/core.o

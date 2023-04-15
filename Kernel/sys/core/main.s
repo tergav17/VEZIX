@@ -7,7 +7,7 @@
 .globl main
 main:
 	; place stack in kstack
-	ld	sp,k_stack+c_ksize
+	ld	sp,u+$u_t
 	
 	; clear kernel memory
 	xor	a
@@ -76,7 +76,12 @@ main:
 	
 
 .bss
-.defl byte[c_ksize] k_stack
+
+; User structure
+; contains stack and per-process
+; state information
+.globl u
+.defl u_t u 
 	
 .data
 .defl byte str_vez	"vezix boot"

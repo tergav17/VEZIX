@@ -66,24 +66,14 @@ namei:
 	call	svnhl
 	
 	; set up pfunc
+	ld	d,b		; d = flag
 	ld	(pfunc),hl
 	
 	; set default directory
-	ld	hl,u+u_t.cdir
-	ld	a,(hl)
-	inc	hl
-	ld	h,(hl)
-	ld	l,a
-	ld	de,cino_t.dev
-	add	hl,de
-	ld	e,(hl)
-	inc	hl
-	ld	d,(hl)
-	inc	hl
-	ld	c,(hl)
-	inc	hl
-	ld	b,(hl)
-	ex	de,hl
+	ld	hl,(u+u_t.cnum)
+	ld	b,h
+	ld	c,l
+	ld	hl,(u+u_t.cdev)
 	
 	call	pchar
 	cp	'/'
@@ -94,7 +84,27 @@ namei:
 	ld	bc,rootino
 	
 	; get the inode for this dir
-0:	call	iget
+0:	push	af
+	call	iget
+	pop	af
+	
+	; skip over all '/'
+1:	jr	nz,2f
+	call	pchar
+	cp	'/'
+	jr	1b
+
+	; check for end and flag
+2:	or	a
+	jr	nz,0f
+	cp	d
+	jr	z,0f
+	
+	; todo: error!
+	ret
+
+	; start of cloop
+0:	
 
 ; returns the next character in the 
 ; pfunc

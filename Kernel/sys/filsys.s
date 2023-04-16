@@ -48,6 +48,7 @@
 	byte	flag,
 	
 	; device and inumber
+	; num must come after dev
 	word_t	dev,
 	word_t	num,
 	

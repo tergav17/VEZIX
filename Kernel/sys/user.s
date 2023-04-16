@@ -2,8 +2,9 @@
 ; per-process user area
 
 .type u_t {
-	byte	error,
-	word	dirp,
+	byte	error,	; current error
+	word	dirp,	; dir pointer
+	word	cdir,	; current ino
 	
 	; kernel stack
 	byte[c_ksize] kstack

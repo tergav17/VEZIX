@@ -61,15 +61,30 @@ bmap:
 ;
 ; ix = inode
 ; saves: af, bc, de
-.globl nami
-nami:
+.globl namei
+namei:
 	call	svnhl
 	
 	; set up pfunc
 	ld	(pfunc),hl
 	
 	; set default directory
-	; todo: default inode
+	ld	hl,u+u_t.cdir
+	ld	a,(hl)
+	inc	hl
+	ld	h,(hl)
+	ld	l,a
+	ld	de,cino_t.dev
+	add	hl,de
+	ld	e,(hl)
+	inc	hl
+	ld	d,(hl)
+	inc	hl
+	ld	c,(hl)
+	inc	hl
+	ld	b,(hl)
+	ex	de,hl
+	
 	call	pchar
 	cp	'/'
 	jr	nz,0f

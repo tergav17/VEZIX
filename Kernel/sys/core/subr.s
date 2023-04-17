@@ -98,26 +98,48 @@ namei:
 	cp	d
 	jr	z,0f
 	
-	; todo: error!
+	; error out
+	ld	a,enoent
+	ld	(u+u_t.error),a
 	ret
 
 	; start of cloop
 0:	ld	a,(u+u_t.error)
+	or	a
 	jr	z,1f
 	
-	; error!
-1:	jp	iput
+	; error!, zero ix and return
+9:	call	iput
+	ld	ix,0
+	ret
+
+	; return if last char = '\0'
+1:	cp	e
+	ret	z
+	
+	; ok, get another component
+	; current ino must be a dir
+	ld	a,(ix+dino_t.mode.high)
+	and	(1<<m_dev)&(1<<m_dir)
+	xor	1<<m_dir
+	jr	z,2f
+	
+	; not a dir, error out!
+	ld	a,enotdir
+	ld	(u+u_t.error),a
+	jr	9b
 
 ; returns the next character in the 
 ; pfunc
 ;
-; a = next character
-; uses: af
+; a = e = next character
+; uses: af, e
 pchar:
 	push	hl
 	ld	hl,(pfunc)
 	call	jphl
 	pop	hl
+	ld	e,a
 	ret
 	
 ; returns next character from string

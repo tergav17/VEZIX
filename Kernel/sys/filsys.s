@@ -64,7 +64,7 @@ i_acc	=	2
 i_mnt	= 	3
 i_want	=	4
 
-; modes
+; modes (low byte)
 m_oex	=	0
 m_owr	=	1
 m_ord	=	2
@@ -74,8 +74,11 @@ m_grd	=	5
 m_uex	=	6
 m_uwr	=	7
 
+; modes (high byte)
 m_urd	=	0
-m_gid	=	1
-m_uid	=	2
-m_dev	=	4
-m_dir	=	5
+; we will ignore sgid, suid, and sticky
+; (for now)
+m_pip	=	4
+m_dev	=	5
+m_dir	=	6
+m_reg	=	7

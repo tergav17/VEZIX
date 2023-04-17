@@ -14,4 +14,6 @@
 }
 
 ; error codes
-enfile = 23
+enoent	= 2
+enotdir	= 20
+enfile	= 23

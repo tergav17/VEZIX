@@ -87,7 +87,7 @@ iget:
 	
 	; no empty inode!
 	ld	a,enfile
-	ld	(u+u_t.error),enfile
+	ld	(u+u_t.error),a
 	ret
 	
 4:

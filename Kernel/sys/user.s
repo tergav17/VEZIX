@@ -12,3 +12,6 @@
 	; kernel stack
 	byte[c_ksize] kstack
 }
+
+; error codes
+enfile = 23

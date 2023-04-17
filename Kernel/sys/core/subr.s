@@ -84,9 +84,7 @@ namei:
 	ld	bc,rootino
 	
 	; get the inode for this dir
-0:	push	af
-	call	iget
-	pop	af
+0:	call	iget
 	
 	; skip over all '/'
 1:	jr	nz,2f
@@ -104,7 +102,11 @@ namei:
 	ret
 
 	; start of cloop
-0:	
+0:	ld	a,(u+u_t.error)
+	jr	z,1f
+	
+	; error!
+1:	jp	iput
 
 ; returns the next character in the 
 ; pfunc

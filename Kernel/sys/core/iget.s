@@ -84,8 +84,10 @@ iget:
 	jr	nz,4f
 	cp	iyl
 	jr	nz,4f
+	
 	; no empty inode!
-	; todo return error
+	ld	a,enfile
+	ld	(u+u_t.error),enfile
 	ret
 	
 4:

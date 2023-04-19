@@ -9,6 +9,10 @@
 	word	cdev,	; dev of cdir
 	word	cnum,	; num of cdir
 	
+	
+	word	gp0	; gen reg 0
+	word	gp1	; gen reg 1
+	
 	; kernel stack
 	byte[c_ksize] kstack
 }

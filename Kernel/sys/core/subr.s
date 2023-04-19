@@ -128,6 +128,8 @@ namei:
 	ld	a,enotdir
 	ld	(u+u_t.error),a
 	jr	9b
+	
+2:	
 
 ; returns the next character in the 
 ; pfunc

@@ -120,7 +120,7 @@ namei:
 	; ok, get another component
 	; current ino must be a dir
 	ld	a,(ix+dino_t.mode.high)
-	and	(1<<m_dev)&(1<<m_dir)
+	and	1<<m_dev&1<<m_dir
 	xor	1<<m_dir
 	jr	z,2f
 	

@@ -203,7 +203,7 @@ m_reg	=	7
 	word	cdir,	; current ino
 	word	cdev,	; dev of cdir
 	word	cnum,	; num of cdir
-	byte[c_dsize] dbuf ; dirbuf
+	byte[c_dsize+1] dbuf ; dirbuf
 	
 	
 	word	gp0,	; gen reg 0

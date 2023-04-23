@@ -94,9 +94,9 @@ namei:
 
 	; check for end and flag
 2:	or	a
-	jr	nz,0f
+	jr	nz,cloop
 	cp	d
-	jr	z,0f
+	jr	z,cloop
 	
 	; error out
 	ld	a,enoent
@@ -104,12 +104,12 @@ namei:
 	ret
 
 	; start of cloop
-0:	ld	a,(u+u_t.error)
+cloop:	ld	a,(u+u_t.error)
 	or	a
 	jr	z,1f
 	
 	; error!, zero ix and return
-9:	call	iput
+nerr:	call	iput
 	ld	ix,0
 	ret
 
@@ -127,9 +127,43 @@ namei:
 	; not a dir, error out!
 	ld	a,enotdir
 	ld	(u+u_t.error),a
-	jr	9b
+	jr	nerr
 	
-2:	
+	; collect into dirbuf
+2:	ld	hl,u+u_t.dbuf
+	ld	b,c_dsize
+
+	ld	a,e	; check '\0'
+3:	cp	'/'	; or '/'
+	jr	z,0f
+	cp	'\0'
+	jr	z,0f
+	
+	; if dirbuf full, skip
+	xor	a
+	cp	b
+	jr	z,4f
+	ld	(hl),e
+	inc	hl
+	dec	b
+	
+4:	call	pchar
+	jr	3b
+	
+0:	xor	a
+	ld	(hl),a
+	ld	a,e
+	
+	; skip over all '/'
+1:	cp	'/'
+	jr	nz,2f
+	call	pchar
+	jr	1b
+	
+	; perpare for eloop
+2:	ld	hl,0	; start at block 0
+
+eloop:	
 
 ; returns the next character in the 
 ; pfunc

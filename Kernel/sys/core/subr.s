@@ -163,7 +163,9 @@ nerr:	call	iput
 	; perpare for eloop
 2:	ld	hl,0	; start at block 0
 
-eloop:	
+	; read the current block in
+eloop:	push	hl
+	call	bmap
 
 ; returns the next character in the 
 ; pfunc

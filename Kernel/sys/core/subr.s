@@ -176,6 +176,12 @@ nerr:	call	iput
 	ld	l,h
 	ld	h,a
 
+	; load count as gp0
+	ld	(u+u_t.gp0),hl
+	
+	; start at block 0
+	ld	hl,0
+
 	; read the current block in
 3:	
 

@@ -160,12 +160,24 @@ nerr:	call	iput
 	call	pchar
 	jr	1b
 	
-	; perpare for eloop
-2:	ld	hl,0	; start at block 0
+	; perpare for search
+
+	; calculate count, max 2048
+	; entires in a directory
+2:	ld	h,(ix+cino_t.node.size.low.high)
+	ld	l,(ix+cino_t.node.size.low.low)
+	xor	a
+	add	hl,hl
+	rla
+	add	hl,hl
+	rla
+	add	hl,hl
+	rla
+	ld	l,h
+	ld	h,a
 
 	; read the current block in
-eloop:	push	hl
-	call	bmap
+3:	
 
 ; returns the next character in the 
 ; pfunc

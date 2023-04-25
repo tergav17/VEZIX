@@ -15,11 +15,6 @@ c_nbuf	=	6	; # of buffers
 c_nmnt	=	4	; # of mounts
 c_nino	=	20	; # of inodes
 
-; file system parameters
-; probably shouldn't change
-; c_dsize + 2 must be a power of 2
-c_dsize	=	30	; dirbuf size
-
 ; boot config
 c_rootd	=	0x0000	; root device
 
@@ -203,7 +198,16 @@ m_reg	=	7
 	word	cdir,	; current ino
 	word	cdev,	; dev of cdir
 	word	cnum,	; num of cdir
-	byte[c_dsize+1] dbuf ; dirbuf
+	
+	; directory entry size is
+	; locked at 32 bytes. This
+	; saves a decent amount of
+	; bytes in namei
+	;
+	; changing this will require
+	; modification of that routine
+	; plus others
+	byte[31] dbuf ; dirbuf
 	
 	
 	word	gp0,	; gen reg 0

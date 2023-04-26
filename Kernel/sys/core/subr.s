@@ -52,11 +52,6 @@ bmap:
 	
 ; takes in a symbolic pathname and
 ; parses it into an inode
-; flag defs:
-; 	0: name sought
-;	1: name create
-;	2: name delete
-; b = flag
 ; hl = path function
 ;
 ; ix = inode
@@ -66,8 +61,7 @@ namei:
 	call	svnhl
 	
 	; set up pfunc
-	ld	d,b		; d = flag
-	ld	(pfunc),hl
+	ld	(u+u_t.pfunc),hl
 	
 	; set default directory
 	ld	hl,(u+u_t.cnum)
@@ -182,8 +176,30 @@ nerr:	call	iput
 	; start at block 0
 	ld	hl,0
 
-	; read the current block in
-3:	
+	; save ix and hl, then read
+	; the current block in
+3:	push	hl
+	push	ix
+	call	bmap
+	
+	ld	b,h
+	ld	c,l
+	ld	hl,c_rootd
+	call	bread
+	
+	; start the search
+	; first we check if there are any more entires
+	ld	hl,(u+u_t.gp0)
+	ld	a,h
+	or	l
+	jr	z,9f	; no more entires (TODO)
+	dec	hl
+	ld	(u+u_t.gp0),hl
+	
+	; set pointer to buffer
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
+	ld	d,16	; 16 entries per block
 
 ; returns the next character in the 
 ; pfunc
@@ -192,7 +208,7 @@ nerr:	call	iput
 ; uses: af, e
 pchar:
 	push	hl
-	ld	hl,(pfunc)
+	ld	hl,(u+u_t.pfunc)
 	call	jphl
 	pop	hl
 	ld	e,a
@@ -210,7 +226,3 @@ schar:
 	ld	(u+u_t.dirp),hl
 	pop	hl
 	ret
-
-	
-.bss
-.defl word pfunc

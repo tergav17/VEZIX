@@ -187,19 +187,66 @@ nerr:	call	iput
 	ld	hl,c_rootd
 	call	bread
 	
+	; set pointer to buffer
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
+	ld	d,16	; 16 entries per block
+	
 	; start the search
 	; first we check if there are any more entires
+4:	push	hl
 	ld	hl,(u+u_t.gp0)
 	ld	a,h
 	or	l
 	jr	z,9f	; no more entires (TODO)
 	dec	hl
 	ld	(u+u_t.gp0),hl
+	pop	hl
+
+	; search block
+	push	hl 
+	inc	hl
+	inc	hl
+	ld	bc,(u+u_t.dbuf)
 	
-	; set pointer to buffer
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
-	ld	d,16	; 16 entries per block
+	; see if entry is empty?
+	xor	a
+	cp	(hl)
+	jr	z,6f
+	
+	; compare with dirbuf
+5:	ld	a,(bc)
+	cp	(hl)
+	ld	a,1
+	jr	nz,6f
+	
+	; are we at the end?
+	xor	a
+	cp	(hl)
+	ld	a,2
+	jr	z,6f
+	
+	; next char and loop
+	inc	hl
+	inc	bc
+	jr	5b
+	
+	; check done
+6:	pop	hl
+
+	ld	bc,32
+	add	hl,bc
+	dec	d
+	jr	nz,4b
+	
+	; we need a new block
+	call	brelse
+	pop	ix
+	pop	hl
+	inc	hl
+	jr	3b
+
+	
 
 ; returns the next character in the 
 ; pfunc

@@ -81,21 +81,10 @@ namei:
 0:	call	iget
 	
 	; skip over all '/'
-1:	jr	nz,2f
+1:	jr	nz,cloop
 	call	pchar
 	cp	'/'
 	jr	1b
-
-	; check for end and flag
-2:	or	a
-	jr	nz,cloop
-	cp	d
-	jr	z,cloop
-	
-	; error out
-	ld	a,enoent
-	ld	(u+u_t.error),a
-	ret
 
 	; start of cloop
 cloop:	ld	a,(u+u_t.error)

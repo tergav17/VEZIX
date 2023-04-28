@@ -207,8 +207,8 @@ m_reg	=	7
 	; changing this will require
 	; modification of that routine
 	; plus others
-	byte[31] dbuf	; dirbuf
-	word	pfunc	; path function
+	byte[31] dbuf,	; dirbuf
+	word	pfunc,	; path function
 	
 	word	gp0,	; gen reg 0
 	word	gp1,	; gen reg 1

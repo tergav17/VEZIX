@@ -114,12 +114,12 @@ nerr:	call	iput
 	
 	; collect into dirbuf
 2:	ld	hl,u+u_t.dbuf
-	ld	b,c_dsize
+	ld	b,32
 
 	ld	a,e	; check '\0'
 3:	cp	'/'	; or '/'
 	jr	z,0f
-	cp	'\0'
+	cp	0
 	jr	z,0f
 	
 	; if dirbuf full, skip
@@ -159,7 +159,8 @@ nerr:	call	iput
 	ld	l,h
 	ld	h,a
 
-	; load count as gp0
+	; load count+1 as gp0
+	inc	hl
 	ld	(u+u_t.gp0),hl
 	
 	; start at block 0
@@ -187,7 +188,7 @@ nerr:	call	iput
 	ld	hl,(u+u_t.gp0)
 	ld	a,h
 	or	l
-	jr	z,9f	; no more entires (TODO)
+	jr	z,8f
 	dec	hl
 	ld	(u+u_t.gp0),hl
 	pop	hl
@@ -198,11 +199,6 @@ nerr:	call	iput
 	inc	hl
 	ld	bc,(u+u_t.dbuf)
 	
-	; see if entry is empty?
-	xor	a
-	cp	(hl)
-	jr	z,6f
-	
 	; compare with dirbuf
 5:	ld	a,(bc)
 	cp	(hl)
@@ -212,15 +208,14 @@ nerr:	call	iput
 	; are we at the end?
 	xor	a
 	cp	(hl)
-	ld	a,2
-	jr	z,6f
+	jr	z,7f
 	
 	; next char and loop
 	inc	hl
 	inc	bc
 	jr	5b
 	
-	; check done
+	; check failed!
 6:	pop	hl
 
 	ld	bc,32
@@ -234,6 +229,41 @@ nerr:	call	iput
 	pop	hl
 	inc	hl
 	jr	3b
+	
+	; found it!
+7:	pop	hl
+	ld	c,(hl)
+	inc	hl
+	ld	b,(hl)
+	
+	; clear context for block searches
+	call	brelse
+	pop	ix
+	pop	hl
+	
+	; grab the current device
+	ld	h,(ix+cino_t.dev.high)
+	ld	l,(ix+cino_t.dev.low)
+	
+	; grab the next inode
+	push	hl
+	call	iput
+	pop	hl
+	call	iget
+	
+	; return to cloop 
+	jp	cloop
+
+	; we ran out of entires
+8:	pop	hl
+	call	brelse
+	pop	ix
+	pop	hl
+	
+	; not found!
+	ld	a,enoent
+	ld	(u+u_t.error),a
+	jp	nerr
 
 	
 

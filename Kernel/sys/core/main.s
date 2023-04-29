@@ -47,11 +47,11 @@ main:
 	ld	hl,schar
 	call	namei
 	
-	ld	d,ixh
-	ld	e,ixl
-	ex	de,hl
-	ld	bc,$cino_t
-	call	kdump
+	;ld	d,ixh
+	;ld	e,ixl
+	;ex	de,hl
+	;ld	bc,$cino_t
+	;call	kdump
 	
 	ld	hl,0
 	call	bmap
@@ -60,13 +60,6 @@ main:
 	ld	c,l
 	ld	hl,c_rootd
 	call	bread
-	
-	;ld	b,h
-	;ld	c,l
-	;ld	h,(ix+cino_t.dev.high)
-	;ld	l,(ix+cino_t.dev.low)
-	;call	kputd
-	
 
 	ld	h,(ix+buf_t.addr.high)
 	ld	l,(ix+buf_t.addr.low)
@@ -87,7 +80,7 @@ main:
 .defl byte str_vez	"vezix boot"
 .defl byte str_crlf	"\n\r\0"
 .defl byte str_mem	"mem = \0"
-.defl byte str_init	"/test.txt\0"
+.defl byte str_init	"/etc/init\0"
 
 
 	

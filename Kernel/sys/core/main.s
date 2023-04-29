@@ -70,8 +70,7 @@ main:
 
 	ld	h,(ix+buf_t.addr.high)
 	ld	l,(ix+buf_t.addr.low)
-	ld	bc,512
-	call	kdump
+	call	kputs
 	
 	halt
 	
@@ -82,7 +81,7 @@ main:
 ; contains stack and per-process
 ; state information
 .globl u
-.defl u_t u 
+.defl u_t u 0
 	
 .data
 .defl byte str_vez	"vezix boot"

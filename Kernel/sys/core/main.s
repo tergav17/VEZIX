@@ -42,9 +42,10 @@ main:
 	call	dinit	; device init
 	call	iinit	; mount root
 	
-	ld	hl,c_rootd
-	ld	bc,rootino
-	call	iget
+	ld	hl,str_init
+	ld	(u+u_t.dirp),hl
+	ld	hl,schar
+	call	namei
 	
 	ld	d,ixh
 	ld	e,ixl
@@ -87,5 +88,7 @@ main:
 .defl byte str_vez	"vezix boot"
 .defl byte str_crlf	"\n\r\0"
 .defl byte str_mem	"mem = \0"
+.defl byte str_init	"/test.txt\0"
+
 
 	

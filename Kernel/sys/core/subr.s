@@ -103,7 +103,7 @@ nerr:	call	iput
 	; ok, get another component
 	; current ino must be a dir
 	ld	a,(ix+dino_t.mode.high)
-	and	1<<m_dev&1<<m_dir
+	and	0+(1<<m_dev)+(1<<m_dir)
 	xor	1<<m_dir
 	jr	z,2f
 	
@@ -119,7 +119,7 @@ nerr:	call	iput
 	ld	a,e	; check '\0'
 3:	cp	'/'	; or '/'
 	jr	z,0f
-	cp	0
+	or	a
 	jr	z,0f
 	
 	; if dirbuf full, skip
@@ -159,8 +159,7 @@ nerr:	call	iput
 	ld	l,h
 	ld	h,a
 
-	; load count+1 as gp0
-	inc	hl
+	; load count as gp0
 	ld	(u+u_t.gp0),hl
 	
 	; start at block 0
@@ -174,7 +173,8 @@ nerr:	call	iput
 	
 	ld	b,h
 	ld	c,l
-	ld	hl,c_rootd
+	ld	h,(ix+cino_t.dev.high)
+	ld	l,(ix+cino_t.dev.low)
 	call	bread
 	
 	; set pointer to buffer
@@ -197,17 +197,20 @@ nerr:	call	iput
 	push	hl 
 	inc	hl
 	inc	hl
-	ld	bc,(u+u_t.dbuf)
+	ld	bc,u+u_t.dbuf
+	ld	a,30	; length of dirent
 	
 	; compare with dirbuf
-5:	ld	a,(bc)
+5:	ex	af,af'
+	ld	a,(bc)
 	cp	(hl)
-	ld	a,1
 	jr	nz,6f
 	
 	; are we at the end?
-	xor	a
-	cp	(hl)
+	or	a
+	jr	z,7f
+	ex	af,af'
+	dec	a
 	jr	z,7f
 	
 	; next char and loop

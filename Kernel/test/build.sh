@@ -20,6 +20,13 @@ echo -n "fs size: "
 size_r a.out
 mv a.out ../conf/obj/fs.o
 
+echo "\tbuilding proc..."
+as_r -v ../header.s h/proc.s text.s
+echo -n "proc size: "
+size_r a.out
+mv a.out ../conf/obj/proc.o
+
+
 # build devices
 cd ../dev
 as_r ../header.s shd.s ; mv a.out ../conf/obj/shd.o
@@ -35,7 +42,7 @@ mv a.out obj/top.o
 as_r ../header.s conf.s
 mv a.out obj/conf.o
 cd obj
-ld_r -v low.o core.o blkio.o fs.o conf.o shd.o top.o
+ld_r -v low.o core.o blkio.o fs.o proc.o conf.o shd.o top.o
 mv a.out ../out/vezix.o
 
 # post process

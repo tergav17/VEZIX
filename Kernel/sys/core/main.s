@@ -42,6 +42,7 @@ main:
 	call	dinit	; device init
 	call	iinit	; mount root
 	
+	; attempt to load init into core
 	ld	hl,str_init
 	ld	(u+u_t.dirp),hl
 	ld	hl,schar

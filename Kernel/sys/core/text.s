@@ -10,7 +10,7 @@
 ; b = set to 1 to skip arg gathering
 ; ix = image to overlay
 ;
-; saves: af, bc, de, ix
+; saves: af, bc, de
 .globl pexec
 pexec:
 	call	svnhl
@@ -35,7 +35,18 @@ pexec:
 	
 	
 	
+	
+	
+	; regain inode
+	ld	(u+u_t.gp0),ix
 	pop	ix
+
+	; load image into memory
+
+	; close file and release arg block
+	call	iput
+	ld	ix,(u+u_t.gp0)
+	call	brelse
 	ret
 	
 	

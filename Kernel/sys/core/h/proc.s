@@ -8,7 +8,7 @@
 .extern getblk, brelse, bread
 
 ; fs
-.extern bmap
+.extern bmap, iput
 
 ; core
-.extern panic
+.extern panic, u

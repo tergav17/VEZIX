@@ -48,7 +48,7 @@ pexec:
 	ld	ix,(u+u_t.gp0)
 	call	brelse
 	ret
-	
+1:
 	
 .bss
 

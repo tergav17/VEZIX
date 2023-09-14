@@ -43,10 +43,10 @@ main:
 	call	iinit	; mount root
 	
 	; attempt to load init into core
-	ld	hl,str_init
-	ld	(u+u_t.dirp),hl
-	ld	hl,schar
-	call	namei
+	;ld	hl,str_init
+	;ld	(u+u_t.dirp),hl
+	;ld	hl,schar
+	;call	namei
 	
 	;ld	d,ixh
 	;ld	e,ixl
@@ -54,17 +54,19 @@ main:
 	;ld	bc,$cino_t
 	;call	kdump
 	
-	ld	hl,0
-	call	bmap
+	;ld	hl,0
+	;call	bmap
 	
-	ld	b,h
-	ld	c,l
-	ld	hl,c_rootd
-	call	bread
+	;ld	b,h
+	;ld	c,l
+	;ld	hl,c_rootd
+	;call	bread
 
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
-	call	kputs
+	;ld	h,(ix+buf_t.addr.high)
+	;ld	l,(ix+buf_t.addr.low)
+	;call	kputs
+	
+	
 	
 	halt
 	

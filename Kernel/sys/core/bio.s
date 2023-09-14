@@ -31,6 +31,15 @@ bread:
 	pop	ix
 	; todo: iowait
 	ret
+	
+; writes a buffer and wait for
+; completion
+; ix = bpointer to buffer
+; saved: af, bc, de
+.globl bwrite
+bwrite:
+	call	svnhl
+	
 
 ; get block, if the appropriate block
 ; already exists, then return it.

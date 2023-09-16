@@ -41,7 +41,7 @@ bwrite:
 	call	svnhl
 	res	b_done,(ix+buf_t.flag)
 	res	b_read,(ix+buf_t.flag)
-	jr	9b
+	jr	9b  
 	
 
 ; get block, if the appropriate block

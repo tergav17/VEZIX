@@ -5,7 +5,7 @@
 .extern svnhl
 
 ; blkio
-.extern binit, dinit, getblk, brelse, bread
+.extern binit, dinit, getblk, brelse, bread, bwrite
 
 ; fs
 .extern iinit, iget, bmap, namei, schar

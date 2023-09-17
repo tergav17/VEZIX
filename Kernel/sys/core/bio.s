@@ -34,8 +34,9 @@ bread:
 	
 ; writes a buffer and wait for
 ; completion
-; ix = bpointer to buffer
-; saved: af, bc, de
+; ix = pointer to buffer
+;
+; saved: af, bc, de, ix
 .globl bwrite
 bwrite:
 	call	svnhl

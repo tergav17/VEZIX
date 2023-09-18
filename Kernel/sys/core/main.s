@@ -42,25 +42,25 @@ main:
 	call	dinit	; device init
 	call	iinit	; mount root
 	
-	ld	hl,0
-	ld	bc,0
-	call	bread
+	;ld	hl,0
+	;ld	bc,0
+	;call	bread
 	
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
-	inc	(hl)
+	;ld	h,(ix+buf_t.addr.high)
+	;ld	l,(ix+buf_t.addr.low)
+	;inc	(hl)
 	
-	call	bwrite
-	call	brelse
+	;call	bwrite
+	;call	brelse
 	
-	ld	hl,0
-	ld	bc,0
-	call	bread
+	;ld	hl,0
+	;ld	bc,0
+	;call	bread
 	
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
-	ld	bc,512
-	call	kdump
+	;ld	h,(ix+buf_t.addr.high)
+	;ld	l,(ix+buf_t.addr.low)
+	;ld	bc,512
+	;call	kdump
 	
 	; attempt to load init into core
 	;ld	hl,str_init

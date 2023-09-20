@@ -24,8 +24,8 @@ pexec:
 	
 	jr	0b
 	
-	; set execnt
-	inc	a
+	; set execnt 
+1:	inc	a
 	ld	(execnt),a
 	
 	; grab a block for args
@@ -33,8 +33,11 @@ pexec:
 	ld	hl,nodev
 	call	getblk
 	
+	; start loading args into said block
+	ld	hl,(u+u_t.args + 2)
 	
-	
+	; another arg?
+2:	call	fuword
 	
 	
 	; regain inode
@@ -42,13 +45,13 @@ pexec:
 	pop	ix
 
 	; load image into memory
+	
 
 	; close file and release arg block
 	call	iput
 	ld	ix,(u+u_t.gp0)
 	call	brelse
 	ret
-1:
 	
 .bss
 

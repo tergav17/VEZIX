@@ -199,6 +199,8 @@ m_reg	=	7
 	word	cdev,	; dev of cdir
 	word	cnum,	; num of cdir
 	
+	word[5] args,	; syscall args
+	
 	; directory entry size is
 	; locked at 32 bytes. This
 	; saves a decent amount of
@@ -210,8 +212,11 @@ m_reg	=	7
 	byte[31] dbuf,	; dirbuf
 	word	pfunc,	; path function
 	
+	; general registers in user mem
 	word	gp0,	; gen reg 0
 	word	gp1,	; gen reg 1
+	
+	byte	gpa,	; gen reg a
 	
 	; kernel stack
 	byte[c_ksize] kstack

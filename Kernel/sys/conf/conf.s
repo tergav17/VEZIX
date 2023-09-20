@@ -4,6 +4,8 @@
 .extern jphl
 .extern shdstrat, shdinit, shdtab
 
+.text
+
 ; device init bus
 ; called on kernel init
 ; buffers will already be init at this

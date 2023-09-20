@@ -21,7 +21,7 @@ size_r a.out
 mv a.out ../conf/obj/fs.o
 
 echo "\tbuilding proc..."
-as_r -v ../header.s h/proc.s text.s
+as_r -v ../header.s h/proc.s text.s page.s
 echo -n "proc size: "
 size_r a.out
 mv a.out ../conf/obj/proc.o

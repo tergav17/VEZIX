@@ -295,3 +295,16 @@ schar:
 	ld	(u+u_t.dirp),hl
 	pop	hl
 	ret
+	
+; returns next character from string
+; pointed to byte u.dirp from user
+; memory
+.globl uchar
+uchar:
+	push	hl
+	ld	hl,(u+u_t.dirp)
+	call	fubyte
+	inc	hl
+	ld	(u+u_t.dirp),hl
+	pop	hl
+	ret

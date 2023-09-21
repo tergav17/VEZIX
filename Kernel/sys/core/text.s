@@ -34,14 +34,24 @@ pexec:
 	call	getblk
 	
 	; start loading args into said block
-	ld	hl,(u+u_t.args + 2)
 	
-	; another arg?
-2:	call	fuword
+	; do we have another argument to load?
+2:	ld	hl,(u+u_t.args + 2)
+	call	fuword
+	
+	; is it zero?
+	ld	d,a
+	or	e
+	jr	z,9f
+	
+	; increment argument pointer 
+	inc	hl
+	inc	hl
+	ld	(u+u_t.args + 2),hl
 	
 	
 	; regain inode
-	ld	(u+u_t.gp0),ix
+9:	ld	(u+u_t.gp0),ix
 	pop	ix
 
 	; load image into memory

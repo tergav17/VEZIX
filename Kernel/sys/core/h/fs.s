@@ -9,3 +9,6 @@
 
 ; core
 .extern panic, u
+
+; proc
+.extern fubyte

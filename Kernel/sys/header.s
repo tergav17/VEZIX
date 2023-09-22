@@ -224,5 +224,6 @@ m_reg	=	7
 
 ; error codes
 enoent	= 2
+e2big	= 7
 enotdir	= 20
 enfile	= 23

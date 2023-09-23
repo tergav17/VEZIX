@@ -13,6 +13,11 @@
 ;
 ; saves: af, bc, de
 .globl pexec
+
+; local variables
+exargs	= u+u_t.gp0
+exargc	= u+u_t.gpa
+
 pexec:
 	call	svnhl
 	
@@ -38,12 +43,12 @@ pexec:
 	push	ix
 	ld	hl,nodev
 	call	getblk
-	ld	(u+u_t.gp0),ix
+	ld	(exargs),ix
 	
 	; start loading args into said block
 	; set arg count to 0
 	xor	a
-	ld	(u+u_t.gpa),a
+	ld	(exargc),a
 	
 	; set buffer address
 	; and count
@@ -67,7 +72,7 @@ pexec:
 	inc	hl
 	inc	hl
 	ld	(u+u_t.args + 2),hl
-	ld	hl,u+u_t.gpa
+	ld	hl,exargc
 	inc	(hl)
 	
 	; copy user bytes into buffer
@@ -107,7 +112,7 @@ pexec:
 
 	; close file and release arg block
 exbad:	call	iput
-	ld	ix,(u+u_t.gp0)
+	ld	ix,(exargs)
 	call	brelse
 	ret
 	

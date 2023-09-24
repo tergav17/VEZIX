@@ -109,8 +109,13 @@ pexec:
 
 	; load first block to check args 
 	
+	; same as exbad, but releases
+	; current block
+exbadb:	call	brelse 
+	pop	ix
 
-	; close file and release arg block
+	; close file and release arg 
+	; block
 exbad:	call	iput
 	ld	ix,(exargs)
 	call	brelse

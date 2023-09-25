@@ -193,13 +193,13 @@ m_reg	=	7
 
 .type u_t {
 	byte	error,	; current error
-	word	dirp,	; dir pointer
+	word_t	dirp,	; dir pointer
 
-	word	cdir,	; current ino
-	word	cdev,	; dev of cdir
-	word	cnum,	; num of cdir
+	word_t	cdir,	; current ino
+	word_t	cdev,	; dev of cdir
+	word_t	cnum,	; num of cdir
 	
-	word[5] args,	; syscall args
+	word_t[5] args,	; syscall args
 	
 	; directory entry size is
 	; locked at 32 bytes. This
@@ -210,11 +210,12 @@ m_reg	=	7
 	; modification of that routine
 	; plus others
 	byte[31] dbuf,	; dirbuf
-	word	pfunc,	; path function
+	word_t	pfunc,	; path function
 	
 	; general registers in user mem
-	word	gp0,	; gen reg 0
-	word	gp1,	; gen reg 1
+	word_t	gp0,	; gen reg 0
+	word_t	gp1,	; gen reg 1
+	word_t	gp2,	; gen reg 2
 	
 	byte	gpa,	; gen reg a
 	
@@ -225,5 +226,6 @@ m_reg	=	7
 ; error codes
 enoent	= 2
 e2big	= 7
+enoexec = 8
 enotdir	= 20
 enfile	= 23

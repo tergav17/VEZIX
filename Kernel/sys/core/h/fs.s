@@ -5,7 +5,7 @@
 .extern svnhl, mulhe, jphl
 
 ; blkio
-.extern bread, getblk, brelse
+.extern bread, getblk, brelse, hlbuff
 
 ; core
 .extern panic, u

@@ -2,30 +2,31 @@ cd ../sys/conf
 
 # build system components
 cd ../core
-echo "\tbuilding core..."
+printf "\n\tbuilding core...\n"
 as_r -v ../header.s h/core.s main.s prf.s
 echo -n "core size: "
 size_r a.out
 mv a.out ../conf/obj/core.o
 
-echo "\tbuilding blkio..."
+printf "\n\tbuilding blkio..\n."
 as_r -v ../header.s h/blkio.s bio.s
 echo -n "blkio size: "
 size_r a.out
 mv a.out ../conf/obj/blkio.o
 
-echo "\tbuilding fs..."
+printf "\n\tbuilding fs...\n"
 as_r -v ../header.s h/fs.s alloc.s iget.s subr.s rdwri.s
 echo -n "fs size: "
 size_r a.out
 mv a.out ../conf/obj/fs.o
 
-echo "\tbuilding proc..."
+printf "\n\tbuilding proc...\n"
 as_r -v ../header.s h/proc.s text.s page.s
 echo -n "proc size: "
 size_r a.out
 mv a.out ../conf/obj/proc.o
 
+printf "\n\tbuilding dev and linking...\n"
 
 # build devices
 cd ../dev

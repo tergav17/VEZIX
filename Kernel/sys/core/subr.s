@@ -47,7 +47,7 @@ bmap:
 	ret
 	
 9:
-	; indirect block
+	; todo indirect block
 	ret
 	
 ; takes in a symbolic pathname and
@@ -178,8 +178,7 @@ nerr:	call	iput
 	call	bread
 	
 	; set pointer to buffer
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
+	call	hlbuff
 	ld	d,16	; 16 entries per block
 	
 	; start the search

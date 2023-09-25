@@ -16,6 +16,9 @@
 
 ; local variables
 exargs	= u+u_t.gp0
+exdev	= u+u_t.gp1
+exoff	= u+u_t.gp2
+
 exargc	= u+u_t.gpa
 
 pexec:
@@ -39,6 +42,11 @@ pexec:
 1:	inc	a
 	ld	(execnt),a
 	
+	; set exdev
+	ld	h,(ix+cino_t.dev.high)
+	ld	l,(ix+cino_t.dev.low)
+	ld	(exdev),hl
+	
 	; grab a block for args
 	push	ix
 	ld	hl,nodev
@@ -53,8 +61,7 @@ pexec:
 	; set buffer address
 	; and count
 	exx
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
+	call	hlbuff
 	exx
 	ld	bc,512
 	
@@ -108,6 +115,55 @@ pexec:
 	jr	nz,exbad
 
 	; load first block to check args 
+	ld	hl,0
+	call	bmap
+	ld	b,h
+	ld	c,l
+	ld	hl,(exdev)
+	push	ix
+	call	bread
+	ld	a,(u+u_t.error)
+	or	a
+	jr	nz,exbadb
+	
+	; read in magic number and
+	; get load in addresses
+	call	hlbuff
+	ld	a,0x18 
+	cp	(hl)
+	inc	hl
+	jr	nz,0f
+	ld	a,0x0E
+	cp	(hl)
+	inc	hl
+	jr	z,1f
+	
+	; error!
+0:	ld	a,enoexec
+	ld	(u+u_t.error),a
+	jr	exbadb
+	
+	; calculate image offset
+1:	inc	hl
+	ld	b,(hl)
+	inc	hl
+	ld	c,(hl)
+	ex	de,hl
+	ld	hl,c_ubase
+	sbc	hl,bc
+	ld	(exoff),hl
+	ex	de,hl
+	
+	; get image size
+	ld	de,10
+	add	hl,de
+	ld	a,(hl)
+	inc	hl
+	ld	h,(hl)
+	ld	l,a
+	ld	de,c_utop-c_ubase
+	or	a
+	sbc	hl,de
 	
 	; same as exbad, but releases
 	; current block

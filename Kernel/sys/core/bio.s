@@ -126,7 +126,7 @@ getblk:
 6:
 	; write out if delwr
 	bit	b_delwr,(ix+buf_t.flag)
-	;call	nz,bwrite todo
+	call	nz,bwrite
 	
 	; set new flags
 	pop	hl
@@ -198,6 +198,17 @@ brelse:
 	; reset the busy flag
 	res	b_busy,(ix+buf_t.flag),a
 	ld	(ix+buf_t.flag),a
+	ret
+	
+; sets hl to the buffer address
+; ix = pointer to buf header
+;
+; hl = pointer to buffer
+; uses: hl
+.globl hlbuff
+hlbuff:
+	ld	h,(ix+buf_t.addr.high)
+	ld	l,(ix+buf_t.addr.low)
 	ret
 	
 

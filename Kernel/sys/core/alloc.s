@@ -27,8 +27,7 @@ iinit:
 	ld	bc,512
 	ld	d,(iy+buf_t.addr.high)
 	ld	e,(iy+buf_t.addr.low)
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
+	call	hlbuff
 	ldir
 	call	brelse
 	

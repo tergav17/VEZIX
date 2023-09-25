@@ -2,6 +2,7 @@
 ; simh hard disk driver
 
 .extern ixnext, ixlink, ixunlink
+.extern hlbuff
 
 ; command block for simh hdsk
 .type simhd_t {
@@ -107,8 +108,7 @@ shdstart:
 	ld	(parblk.track),hl
 	
 	; set dma location
-	ld	h,(ix+buf_t.addr.high)
-	ld	l,(ix+buf_t.addr.low)
+	call	hlbuff
 	ld	a,(ix+buf_t.scount)
 	or	a
 0:

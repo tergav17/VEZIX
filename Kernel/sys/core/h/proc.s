@@ -5,7 +5,7 @@
 .extern svnhl, mulhe, jphl
 
 ; blkio
-.extern getblk, brelse, bread
+.extern getblk, brelse, bread, hlbuff
 
 ; fs
 .extern bmap, iput

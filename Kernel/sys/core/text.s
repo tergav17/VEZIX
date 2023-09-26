@@ -18,6 +18,7 @@
 exargs	= u+u_t.gp0
 exdev	= u+u_t.gp1
 exoff	= u+u_t.gp2
+excount	= u+u_t.gp3
 
 exargc	= u+u_t.gpa
 
@@ -154,9 +155,17 @@ pexec:
 	ld	(exoff),hl
 	ex	de,hl
 	
-	; get image size
-	ld	de,10
+	; get image count
+	ld	de,8
 	add	hl,de
+	ld	d,(hl)
+	inc	hl
+	ld	e,(hl)
+	inc	hl
+	ld	(excount),de
+	
+	
+	; get image size
 	ld	a,(hl)
 	inc	hl
 	ld	h,(hl)

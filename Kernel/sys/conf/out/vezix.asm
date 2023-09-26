@@ -98,10 +98,10 @@ lc06eh:
 sub_c072h:
 	jp (hl)	
 lc073h:
-	ld sp,0c6b0h
+	ld sp,0c6c3h
 	xor a	
-	ld hl,0d89ch
-	ld de,0c635h
+	ld hl,0d8afh
+	ld de,0c646h
 	push de	
 	sbc hl,de
 	dec hl	
@@ -112,19 +112,19 @@ lc073h:
 	ld (hl),a	
 	ldir
 	call sub_c157h
-	ld hl,lc610h
+	ld hl,lc621h
 	call sub_c105h
-	ld hl,lc61dh
+	ld hl,lc62eh
 	call sub_c105h
 	xor a	
 	ld hl,lc000h
 	ld de,00000h
 	sbc hl,de
 	call sub_c112h
-	ld hl,lc61ah
+	ld hl,lc62bh
 	call sub_c105h
 	call sub_c22ch
-	call sub_c569h
+	call sub_c57ah
 	call sub_c25eh
 	halt	
 	call sub_c003h
@@ -223,7 +223,7 @@ sub_c13fh:
 	out (011h),a
 	ret	
 sub_c149h:
-	ld hl,lc62eh
+	ld hl,lc63fh
 	call sub_c105h
 	pop hl	
 	call sub_c112h
@@ -247,7 +247,7 @@ lc16fh:
 	ld e,(ix+00bh)
 	ld h,004h
 	call sub_c063h
-	ld de,lc56dh
+	ld de,lc57eh
 	add hl,de	
 	ld a,(hl)	
 	inc hl	
@@ -265,7 +265,7 @@ sub_c187h:
 sub_c194h:
 	call sub_c003h
 	xor a	
-	ld ix,0d2b0h
+	ld ix,0d2c3h
 	ld iy,00000h
 	ex af,af'	
 	ld a,006h
@@ -327,7 +327,7 @@ lc1f5h:
 	ld (ix+002h),008h
 lc20eh:
 	ld c,006h
-	ld iy,0d2b0h
+	ld iy,0d2c3h
 	ld a,(ix+005h)
 lc217h:
 	cp (iy+005h)
@@ -342,8 +342,8 @@ lc21fh:
 	ret	
 sub_c22ch:
 	ld c,006h
-	ld hl,0c6b0h
-	ld ix,0d2b0h
+	ld hl,0c6c3h
+	ld ix,0d2c3h
 	xor a	
 lc236h:
 	ld (ix+007h),h
@@ -385,15 +385,15 @@ sub_c25eh:
 	defb 0fdh,054h	;ld d,iyh
 	defb 0fdh,05dh	;ld e,iyl
 	ex de,hl	
-	ld (0d300h),hl
+	ld (0d313h),hl
 	ld hl,00000h
-	ld (0d2feh),hl
+	ld (0d311h),hl
 	ret	
 sub_c297h:
 	call sub_c003h
 	ex de,hl	
 lc29bh:
-	ld ix,0d316h
+	ld ix,0d329h
 	ld a,014h
 	ld iy,00000h
 lc2a5h:
@@ -409,7 +409,7 @@ lc2a5h:
 	jr nz,lc2e8h
 	bit 3,(ix+040h)
 	ret z	
-	ld iy,0d2feh
+	ld iy,0d311h
 	ld c,000h
 lc2c6h:
 	ld a,(iy+005h)
@@ -448,7 +448,7 @@ lc2f3h:
 	defb 0fdh,0bdh	;cp iyl
 	jr nz,lc30ch
 	ld a,017h
-	ld (0c635h),a
+	ld (0c646h),a
 	ret	
 lc30ch:
 	ld (iy+042h),d
@@ -529,11 +529,11 @@ sub_c36bh:
 lc389h:
 	ret	
 	call sub_c003h
-	ld (0c667h),hl
-	ld hl,(0c63ch)
+	ld (0c678h),hl
+	ld hl,(0c64dh)
 	ld b,h	
 	ld c,l	
-	ld hl,(0c63ah)
+	ld hl,(0c64bh)
 	call sub_c481h
 	cp 02fh
 	jr nz,lc3a5h
@@ -547,7 +547,7 @@ lc3a8h:
 	cp 02fh
 	jr lc3a8h
 lc3b1h:
-	ld a,(0c635h)
+	ld a,(0c646h)
 	or a	
 	jr z,lc3bfh
 lc3b7h:
@@ -562,10 +562,10 @@ lc3bfh:
 	xor 040h
 	jr z,lc3d1h
 	ld a,014h
-	ld (0c635h),a
+	ld (0c646h),a
 	jr lc3b7h
 lc3d1h:
-	ld hl,0c648h
+	ld hl,0c659h
 	ld b,020h
 	ld a,e	
 lc3d7h:
@@ -603,7 +603,7 @@ lc3f6h:
 	rla	
 	ld l,h	
 	ld h,a	
-	ld (0c669h),hl
+	ld (0c67ah),hl
 	ld hl,00000h
 lc40bh:
 	push hl	
@@ -618,17 +618,17 @@ lc40bh:
 	ld d,010h
 lc421h:
 	push hl	
-	ld hl,(0c669h)
+	ld hl,(0c67ah)
 	ld a,h	
 	or l	
 	jr z,lc472h
 	dec hl	
-	ld (0c669h),hl
+	ld (0c67ah),hl
 	pop hl	
 	push hl	
 	inc hl	
 	inc hl	
-	ld bc,0c648h
+	ld bc,0c659h
 	ld a,01eh
 lc436h:
 	ex af,af'	
@@ -675,65 +675,65 @@ lc472h:
 	pop ix
 	pop hl	
 	ld a,002h
-	ld (0c635h),a
+	ld (0c646h),a
 	jp lc3b7h
 sub_c481h:
 	push hl	
-	ld hl,(0c667h)
+	ld hl,(0c678h)
 	call sub_c072h
 	pop hl	
 	ld e,a	
 	ret	
 	push hl	
-	ld hl,(0c636h)
+	ld hl,(0c647h)
 	ld a,(hl)	
 	inc hl	
-	ld (0c636h),hl
+	ld (0c647h),hl
 	pop hl	
 	ret	
 	push hl	
-	ld hl,(0c636h)
-	call sub_c555h
+	ld hl,(0c647h)
+	call sub_c55dh
 	inc hl	
-	ld (0c636h),hl
+	ld (0c647h),hl
 	pop hl	
 	ret	
 	call sub_c003h
 lc4a6h:
-	ld a,(0d88eh)
+	ld a,(0d8a1h)
 	or a	
 	jr z,lc4aeh
 	jr lc4a6h
 lc4aeh:
 	inc a	
-	ld (0d88eh),a
+	ld (0d8a1h),a
 	ld h,(ix+042h)
 	ld l,(ix+041h)
-	ld (0c66bh),hl
+	ld (0c67ch),hl
 	push ix
 	ld hl,0ffffh
 	call sub_c194h
-	ld (0c669h),ix
+	ld (0c67ah),ix
 	xor a	
-	ld (0c66fh),a
+	ld (0c682h),a
 	exx	
 	call sub_c257h
 	exx	
 	ld bc,00200h
 lc4d3h:
-	ld hl,(0c640h)
-	call sub_c557h
+	ld hl,(0c651h)
+	call sub_c55fh
 	ld d,a	
 	or e	
 	jr z,lc4f9h
 	inc hl	
 	inc hl	
-	ld (0c640h),hl
-	ld hl,0c66fh
+	ld (0c651h),hl
+	ld hl,0c682h
 	inc (hl)	
 	ex de,hl	
 lc4e7h:
-	call sub_c555h
+	call sub_c55dh
 	inc hl	
 	exx	
 	ld (hl),a	
@@ -748,17 +748,17 @@ lc4e7h:
 	inc a	
 lc4f9h:
 	pop ix
-	jr nz,lc54ah
+	jr nz,lc552h
 	ld hl,00000h
 	call sub_c36bh
 	ld b,h	
 	ld c,l	
-	ld hl,(0c66bh)
+	ld hl,(0c67ch)
 	push ix
 	call sub_c160h
-	ld a,(0c635h)
+	ld a,(0c646h)
 	or a	
-	jr nz,lc545h
+	jr nz,lc54dh
 	call sub_c257h
 	ld a,018h
 	cp (hl)	
@@ -770,8 +770,8 @@ lc4f9h:
 	jr z,lc529h
 lc522h:
 	ld a,008h
-	ld (0c635h),a
-	jr lc545h
+	ld (0c646h),a
+	jr lc54dh
 lc529h:
 	inc hl	
 	ld b,(hl)	
@@ -780,10 +780,15 @@ lc529h:
 	ex de,hl	
 	ld hl,00000h
 	sbc hl,bc
-	ld (0c66dh),hl
+	ld (0c67eh),hl
 	ex de,hl	
-	ld de,0000ah
+	ld de,00008h
 	add hl,de	
+	ld d,(hl)	
+	inc hl	
+	ld e,(hl)	
+	inc hl	
+	ld (0c680h),de
 	ld a,(hl)	
 	inc hl	
 	ld h,(hl)	
@@ -791,18 +796,18 @@ lc529h:
 	ld de,lc000h
 	or a	
 	sbc hl,de
-lc545h:
+lc54dh:
 	call sub_c24fh
 	pop ix
-lc54ah:
+lc552h:
 	call sub_c35fh
-	ld ix,(0c669h)
+	ld ix,(0c67ah)
 	call sub_c24fh
 	ret	
-sub_c555h:
+sub_c55dh:
 	ld a,(hl)	
 	ret	
-sub_c557h:
+sub_c55fh:
 	ld e,(hl)	
 	inc hl	
 	ld d,(hl)	
@@ -819,61 +824,68 @@ sub_c557h:
 	ret	
 	ldir
 	ret	
-sub_c569h:
-	call sub_c57ch
+	ld h,d	
+	ld l,e	
+	ld (hl),000h
+	inc de	
+	dec bc	
+	ldir
 	ret	
-lc56dh:
-	add a,(hl)	
+sub_c57ah:
+	call sub_c58dh
+	ret	
+lc57eh:
+	sub a	
 	push bc	
-	adc a,a	
+	and d	
 	ret c	
-	ld a,e	
+	adc a,h	
 	push bc	
-	ld a,e	
+	adc a,h	
 	push bc	
-	ld a,e	
+	adc a,h	
 	push bc	
-	ld a,e	
+	adc a,h	
 	push bc	
-	ld a,e	
+	adc a,h	
 	push bc	
 	ret	
-sub_c57ch:
+sub_c58dh:
 	ld b,020h
 	ld a,001h
-lc580h:
+lc591h:
 	out (0fdh),a
 	dec b	
-	jr nz,lc580h
+	jr nz,lc591h
 	ret	
 	xor a	
 	ld (ix+004h),a
-	ld hl,0d891h
+	ld hl,0d8a4h
 	call sub_c024h
-	ld a,(0d88fh)
+	ld a,(0d8a2h)
 	or a	
-	jr z,lc597h
+	jr z,lc5a8h
 	ret	
-lc597h:
-	ld ix,0d891h
+lc5a8h:
+	ld ix,0d8a4h
 	call sub_c012h
 	ret z	
 	ld a,001h
-	ld (0d88fh),a
+	ld (0d8a2h),a
 	ld a,002h
 	bit 0,(ix+002h)
-	jr nz,lc5aeh
+	jr nz,lc5bfh
 	ld a,003h
-lc5aeh:
-	ld (0d895h),a
+lc5bfh:
+	ld (0d8a8h),a
 	ld a,(ix+00ah)
-	ld (0d896h),a
+	ld (0d8a9h),a
 	ld a,(ix+008h)
 	and 007h
 	rlca	
 	rlca	
 	or (ix+004h)
-	ld (0d897h),a
+	ld (0d8aah),a
 	ld h,(ix+009h)
 	ld l,(ix+008h)
 	ld a,l	
@@ -884,38 +896,38 @@ lc5aeh:
 	srl h
 	rra	
 	ld l,a	
-	ld (0d898h),hl
+	ld (0d8abh),hl
 	call sub_c257h
 	ld a,(ix+004h)
 	or a	
-lc5dfh:
-	jr z,lc5e8h
+lc5f0h:
+	jr z,lc5f9h
 	ld de,00080h
 	add hl,de	
 	dec a	
-	jr lc5dfh
-lc5e8h:
-	ld (0d89ah),hl
+	jr lc5f0h
+lc5f9h:
+	ld (0d8adh),hl
 	ld b,007h
-	ld hl,0d895h
-lc5f0h:
+	ld hl,0d8a8h
+lc601h:
 	ld a,(hl)	
 	out (0fdh),a
 	inc hl	
 	dec b	
-	jr nz,lc5f0h
+	jr nz,lc601h
 	in a,(0fdh)
 	ld a,004h
 	inc (ix+004h)
 	cp (ix+004h)
-	jr nz,lc597h
+	jr nz,lc5a8h
 	xor a	
-	ld (0d88fh),a
-	ld hl,0d891h
+	ld (0d8a2h),a
+	ld hl,0d8a4h
 	call sub_c04eh
-	jr nz,lc597h
+	jr nz,lc5a8h
 	ret	
-lc610h:
+lc621h:
 	halt	
 	ld h,l	
 	ld a,d	
@@ -925,17 +937,17 @@ lc610h:
 	ld l,a	
 	ld l,a	
 	ld (hl),h	
-lc61ah:
+lc62bh:
 	ld a,(bc)	
 	dec c	
 	nop	
-lc61dh:
+lc62eh:
 	ld l,l	
 	ld h,l	
 	ld l,l	
 	jr nz,$+63
-	jr nz,lc624h
-lc624h:
+	jr nz,lc635h
+lc635h:
 	cpl	
 	ld h,l	
 	ld (hl),h	
@@ -946,7 +958,7 @@ lc624h:
 	ld l,c	
 	ld (hl),h	
 	nop	
-lc62eh:
+lc63fh:
 	ld (hl),b	
 	ld h,c	
 	ld l,(hl)	

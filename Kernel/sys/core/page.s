@@ -71,3 +71,18 @@ suword:
 sublock:
 	ldir
 	ret
+	
+; clears a section of user space
+; bc = byte count
+; de = start of clear section
+;
+; uses: af, bc, de, hl
+.globl uclear
+uclear:
+	ld	h,d
+	ld	l,e
+	ld	(hl),0
+	inc	de
+	dec	bc
+	ldir
+	ret

@@ -221,7 +221,19 @@ m_reg	=	7
 	byte	gpa,	; gen reg a
 	
 	; kernel stack
-	byte[c_ksize] kstack
+	byte[c_ksize] kstack,
+	
+	; user registers
+	word_t	r_ix,
+	word_t	r_iy,
+	word_t	r_afa,
+	word_t	r_bca,
+	word_t	r_dea,
+	word_t	r_hla,
+	word_t	r_af,
+	word_t	r_bc,
+	word_t	r_de,
+	word_t	r_hl
 }
 
 ; error codes

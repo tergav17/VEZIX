@@ -139,3 +139,37 @@ When called, the process will sleep until one of its child processes terminates.
 
 
 ## 8: CREAT
+
+Arguments:
+
+- C = File create mode
+
+- HL = Path to file
+
+Returned Values:
+
+- A = Returns >127 on an error
+
+- C = File descriptor
+
+
+
+Creates a new file or re-creates an existing file. If the file already exist, it maintains its existing mode and is truncated to 0 bytes long. If the file does not exist, it is given the mode found in the C register. The format of the mode is the same as the CHMOD syscall.
+
+
+
+Additionally, the syscall will return a new file descriptor that is open to writing. This is regardless of what the mode has been set to.
+
+
+
+## 9: LINK
+
+Arguments:
+
+- DE = Path #1
+
+- HL = Path #2
+
+Returned Values:
+
+- A = Returns >127 on an error

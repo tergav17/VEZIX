@@ -173,3 +173,61 @@ Arguments:
 Returned Values:
 
 - A = Returns >127 on an error
+
+
+
+Creates a symbolic link from path #2 to the file at pointed to by path #1. Both files must be on the same file system.
+
+
+
+## 10: UNLINK
+
+Arguments:
+
+- HL = Path to file
+
+Returned Values:
+
+- A = Returns >127 on an error
+
+
+
+Removes a symboliclink to a file. If all links to a file are removed, than the file is destroyed and its contents deallocated. If a file is currently open when this happens, it will be postponed until the file is closed.
+
+
+
+## 11: EXEC
+
+Arguments:
+
+- DE = Path to executable file
+
+- HL = Argument list
+
+Returned Values:
+
+- A = Returns >127 on an error
+
+
+
+Replaces the current core image with a new one from an executable file. After that, execution is started at the beginning of the image. The original core image is lost. Files will remain open across exec calls, as will ignored signals. Any caught signal is reset, however. 
+
+
+
+The argument list takes the form of an array of pointers to null terminated strings. The pointer array itself it also null terminted. This argument list will be copied to the top of the stack in the new core image.
+
+
+
+## 12: CHDIR
+
+Arguments: 
+
+- HL = Path to directory
+
+Returned Values:
+
+- A = Returns >127 on an error
+
+
+
+Changes to working path to the directory pointed to by register HL. 

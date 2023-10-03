@@ -165,8 +165,10 @@ m_uwr	=	7
 
 ; modes (high byte)
 m_urd	=	0
-; we will ignore sgid, suid, and sticky
+; we will ignore sticky
 ; (for now)
+m_gid	=	2
+m_uid	=	3
 m_pip	=	4
 m_dev	=	5
 m_dir	=	6

@@ -142,7 +142,7 @@ When called, the process will sleep until one of its child processes terminates.
 
 Arguments:
 
-- C = File create mode
+- BC = File create mode
 
 - HL = Path to file
 
@@ -154,7 +154,7 @@ Returned Values:
 
 
 
-Creates a new file or re-creates an existing file. If the file already exist, it maintains its existing mode and is truncated to 0 bytes long. If the file does not exist, it is given the mode found in the C register. The format of the mode is the same as the CHMOD syscall.
+Creates a new file or re-creates an existing file. If the file already exist, it maintains its existing mode and is truncated to 0 bytes long. If the file does not exist, it is given the mode found in the BC register. The format of the mode is the same as the CHMOD syscall.
 
 
 
@@ -231,3 +231,251 @@ Returned Values:
 
 
 Changes to working path to the directory pointed to by register HL. 
+
+
+
+## 13: TIME
+
+Arguments:
+
+- None
+
+Returned Values:
+
+- A = 0
+
+- BC = Lower 16 bits of time
+
+- DE = Upper 16 bits of time
+
+
+
+Returns the number of seconds since 00\:00\:00 GMT, Janurary 1st, 1970. Value is unsigned.
+
+
+
+## 14: MKNOD
+
+Arguments:
+
+- BC = File mode
+
+- DE = Major / minor number
+
+- HL = Path to file
+
+Returned Values:
+
+- A = Returns >127 on an error
+
+
+
+Creates a new special file or directory. The type of file creates depends on the contents of mode value in register BC. If a special file is create, it will be given the major / minor number of DE. Only the superuser may execute this function.
+
+
+
+## 15: CHMOD
+
+Arguments:
+
+- BC = File mode
+
+- HL = Path to file
+
+Returned Values:
+
+- A = Returns >127 on error 
+
+
+
+Changes the mode of a file. The mode can only be changed by the superuser or owner of the file. The mode bits are as follows:
+
+         4000 set user ID on execution
+         2000 set group ID on execution
+         0400 read by owner
+         0200 write by owner
+         0100 execute (search on directory) by owner
+         0070 read, write, execute (search) by group
+         0007 read, write, execute (search) by others
+
+## 16: CHOWN
+
+Arguments:
+
+- B = New owner
+
+- C = New group
+
+- HL = Path to file
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Updates the owner and group of a given file. Only the superuser may execute this function.
+
+
+
+## 17: BREAK
+
+Arguments:
+
+- HL = Address of break
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Changes the break of the current executable. Any data that is above the break and below the stack is off-limits to the user program, and is liable to overwriting at any time. The break defaults to the top of the BSS section.
+
+
+
+## 18: STAT
+
+Arguments:
+
+- DE = Address of buffer
+
+- HL = Path to file
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Transfers the on-disk inode record of the given file to the address pointed to by DE.
+
+
+
+TODO: Include struct of on-disk inode
+
+
+
+## 19: LSEEK
+
+Arguments:
+
+- B = Ptrname
+
+- C = File descriptor
+
+- DE = Lower 16 bits of offset
+
+- HL = Upper 16 bits of offset
+
+Returned Values:
+
+- A = Returns >127 on error
+
+- DE = Lower 16 bits of pointer
+
+- HL = Upper 16 bits of offset
+
+
+
+Changes the read pointer for an open file. The value of register B determines what effect the offset has on the pointer.
+
+- 0: Pointer is set to offset
+
+- 1: Pointer is set to current location + offset
+
+- 2: Pointer is set to size of file + offset
+
+
+
+## 20: GETPID
+
+Arguments:
+
+- None
+
+Returned Values:
+
+- A = Returns >127 on error
+
+- BC = ID of current process
+
+
+
+Returns the PID of the current process.
+
+
+
+## 21: MOUNT
+
+Arguments:
+
+- C = Read/write flag
+
+- DE = Major / minor number
+
+- HL = Mount path
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Mounts a block device onto the file system. The new file system will need to be mounted onto a path in the existing file system. This path must exist as a directory, file, or special file. When the new file system is mounted, the mount point on the old file system will become inaccessable.
+
+
+
+The register C should be set to 0 if the file system can be written to. Read-only block devices must be mounted with writing disabled to avoid errors.
+
+
+
+## 22: UMOUNT
+
+Arguments:
+
+- BC = Major / minor number
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Signals to the operating system that a block device should be un-mounted from the file system. All buffers will be written, and the original mount point will revert to its original state. 
+
+
+
+## 23: SETUID
+
+Arguments:
+
+- C = User ID
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Sets the user ID of the current process. Both the effective and the real user ID are set. Only the superuser may execute this function, or if register BC is the real user ID.
+
+
+
+## 24: GETUID
+
+Arguments:
+
+- None
+
+Returned Values:
+
+- A = Returns >127 on error
+
+- B = Effective user ID
+
+- C = Real user ID
+
+
+
+Returns the effective and real user ID of the current process.

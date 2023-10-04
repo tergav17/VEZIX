@@ -479,3 +479,197 @@ Returned Values:
 
 
 Returns the effective and real user ID of the current process.
+
+
+
+## 25: STIME
+
+Arguments:
+
+- BC = Lower 16 bits of time
+
+- DE = Upper 16 bits of time
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Sets the current time. Same format as TIME syscall. Only the superuser may execute this function.
+
+
+
+## 28: FSTAT
+
+Arguments:
+
+- C = File descriptor
+
+- DE = Address of buffer
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Operates the same as the STAT function, but uses a file descriptor instead of a file path.
+
+
+
+## 31: IOCTL
+
+Arguments:
+
+- C = File descriptor
+
+- DE = Request #
+
+- HL = Address of buffer
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Replaces the STTY and GTTY function calls. The actual operation depends on the character device being operated on. Requests can both read and write from the buffer.
+
+
+
+## 34: NICE
+
+Arguments:
+
+- C = Process priority
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Sets the priority of the process.
+
+
+
+## 35: SLEEP
+
+Arguments:
+
+- BC = Number of seconds to sleep
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Sets the process to sleep for a certain amount of seconds.
+
+
+
+## 36: SYNC
+
+Arguments:
+
+- None
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Writes out all of the buffers in core. Prepares the file system for shutdown.
+
+
+
+## 37: KILL
+
+Arguments:
+
+- BC = Process ID to kill
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Sends a kill signal to a process. The process must have the same effective ID, otherwise the function is restricted to the superuser. 
+
+
+
+## 41: DUP
+
+Arguments:
+
+- C = Original file descriptor
+
+Returned Values:
+
+- A = Returns >127 on error
+
+- B = New file descriptor
+
+
+
+Duplicates a file descriptor. The new file descriptor will take the lowest available slot.
+
+
+
+## 42: PIPE
+
+Arguments:
+
+- None
+
+Returned Values:
+
+- A = Returns >127 on error
+
+- B = Read pipe descriptor
+
+- C = Write pipe descriptor
+
+
+
+Creates a new symbolic pipe. Data written to the pipe will be buffered, after that the writing process will be suspended.
+
+
+
+## 46: SETGID
+
+Arguments:
+
+- C = New group ID
+
+Returned Values:
+
+- A = Returns >127 on error
+
+
+
+Sets the group ID of the current process. Both the effective and the real group ID are set. Only the superuser may execute this function, or if register BC is the real group ID.
+
+
+
+## 47: GETGID
+
+Arguments:
+
+- None
+
+Returned Values:
+
+- A = Returns >127 on error
+
+- B = Effective group ID
+
+- C = Real group ID
+
+
+
+Returns the effective and real group ID of the current process.

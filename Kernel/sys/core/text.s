@@ -170,9 +170,22 @@ pexec:
 	inc	hl
 	ld	h,(hl)
 	ld	l,a
+	ld	b,h
+	ld	c,l
 	ld	de,c_utop-c_ubase
 	or	a
 	sbc	hl,de
+	jr	nc,2f
+	
+	; error!
+	ld	a,e2big
+	ld	(u+u_t.error),a
+	jr	exbadb
+
+	; commit to core image
+	; clear core
+2:	ld	de,c_ubase
+	call	uclear
 	
 	; same as exbad, but releases
 	; current block

@@ -14,17 +14,6 @@
 bread:
 	call	svnhl
 	call	getblk
-	; fall to baccess
-	
-; reads a block into a specified
-; buffer. useful for mass transfers
-; without obliterating the cache.
-; ix = pointer to buffer
-;
-; ix = pointer to buffer 
-; saved: af, bc, de
-.globl baccess
-baccess:
 	bit	b_done,(ix+buf_t.flag)
 	ret	nz
 	set	b_read,(ix+buf_t.flag)

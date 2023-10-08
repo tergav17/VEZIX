@@ -19,6 +19,7 @@ exargs	= u+u_t.gp0
 exdev	= u+u_t.gp1
 exoff	= u+u_t.gp2
 excount	= u+u_t.gp3
+expoint	= u+u_t.gp4
 
 exargc	= u+u_t.gpa
 
@@ -186,6 +187,29 @@ pexec:
 	; clear core
 2:	ld	de,c_ubase
 	call	uclear
+	
+	; Figure out how many bytes
+	; to copy from block
+3:	ld	hl,(excount)
+	ld	b,h
+	ld	c,l
+	ld	de,512
+	or	a
+	sbc	hl,de
+	push	af
+	jr	c,4f
+	ld	b,d
+	ld	c,e
+	
+	ld	hl,c_ubase
+	ld	(expoint),hl
+
+	; Copy block
+4:	call	hlbuff
+	ld	de,(expoint)
+	call	ublock
+	pop	af
+	jr	c,5f	; do more?
 	
 	; same as exbad, but releases
 	; current block

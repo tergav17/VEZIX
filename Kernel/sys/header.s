@@ -219,6 +219,7 @@ m_reg	=	7
 	word_t	gp1,	; gen reg 1
 	word_t	gp2,	; gen reg 2
 	word_t	gp3,	; gen reg 3
+	word_t	gp4,	; gen reg 4
 	
 	byte	gpa,	; gen reg a
 	

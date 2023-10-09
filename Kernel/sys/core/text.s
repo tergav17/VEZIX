@@ -114,7 +114,7 @@ pexec:
 9:	pop	ix
 	
 	; did we encounter an error?
-	jr	nz,exbad
+	jp	nz,exbad
 
 	; load first block to check args 
 	ld	hl,0
@@ -207,9 +207,11 @@ pexec:
 	; Copy block
 4:	call	hlbuff
 	ld	de,(expoint)
-	call	ublock
+	call	sublock
 	pop	af
 	jr	c,5f	; do more?
+	
+5:	
 	
 	; same as exbad, but releases
 	; current block

@@ -188,7 +188,7 @@ pexec:
 2:	ld	de,c_ubase
 	call	uclear
 	
-	; Figure out how many bytes
+	; figure out how many bytes
 	; to copy from block
 3:	ld	hl,(excount)
 	ld	b,h
@@ -211,6 +211,12 @@ pexec:
 	pop	af
 	jr	c,5f	; do more?
 	
+	; do more
+	ld	(expoint),de
+	call 	brelse
+	
+	
+	; we are done loading
 5:	
 	
 	; same as exbad, but releases

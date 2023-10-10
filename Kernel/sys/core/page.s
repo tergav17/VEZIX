@@ -66,6 +66,7 @@ suword:
 ; de = destination in user space
 ; hl = source in kernel space
 ;
+; de = de + bc
 ; uses: af, bc, de, hl
 .globl sublock
 sublock:

@@ -20,6 +20,7 @@ exdev	= u+u_t.gp1
 exoff	= u+u_t.gp2
 excount	= u+u_t.gp3
 expoint	= u+u_t.gp4
+exblock = u+u_t.gp5
 
 exargc	= u+u_t.gpa
 

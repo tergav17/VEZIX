@@ -20,7 +20,6 @@ exdev	= u+u_t.gp1
 exoff	= u+u_t.gp2
 excount	= u+u_t.gp3
 expoint	= u+u_t.gp4
-exblock = u+u_t.gp5
 
 exargc	= u+u_t.gpa
 
@@ -119,6 +118,7 @@ pexec:
 
 	; load first block to check args 
 	ld	hl,0
+	push	hl
 	call	bmap
 	ld	b,h
 	ld	c,l
@@ -205,7 +205,7 @@ pexec:
 	ld	hl,c_ubase
 	ld	(expoint),hl
 
-	; Copy block
+	; copy block
 4:	call	hlbuff
 	ld	de,(expoint)
 	call	sublock
@@ -215,6 +215,22 @@ pexec:
 	; do more
 	ld	(expoint),de
 	call 	brelse
+	pop	ix
+	pop	hl
+	inc	hl
+	push	hl
+	call	bmap
+	ld	b,h
+	ld	c,l
+	ld	hl,(exdev)
+	push	ix
+	call	bread
+	ld	a,(u+u_t.error)
+	or	a
+	jr	nz,exbadb
+	
+	; continue copying
+	jr	3b
 	
 	
 	; we are done loading
@@ -222,8 +238,9 @@ pexec:
 	
 	; same as exbad, but releases
 	; current block
-exbadb:	call	brelse 
+exbadb:	call	brelse
 	pop	ix
+	pop	hl
 
 	; close file and release arg 
 	; block

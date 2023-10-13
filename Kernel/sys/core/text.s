@@ -234,7 +234,10 @@ pexec:
 	
 	
 	; we are done loading
-5:	
+5:	ld	hl,(exoff)
+	ld	a,h
+	or	l
+	jr	z,6f
 	
 	; same as exbad, but releases
 	; current block

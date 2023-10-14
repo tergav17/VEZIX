@@ -209,12 +209,12 @@ pexec:
 4:	call	hlbuff
 	ld	de,(expoint)
 	call	sublock
-	pop	af
-	jr	c,5f	; do more?
 	
-	; do more
+	; release current block
 	ld	(expoint),de
 	call 	brelse
+	pop	af
+	jr	c,5f	; do more?
 	pop	ix
 	pop	hl
 	inc	hl
@@ -237,7 +237,17 @@ pexec:
 5:	ld	hl,(exoff)
 	ld	a,h
 	or	l
-	jr	z,6f
+	jr	z,9f
+	
+	; do relocation here
+
+
+	; initialize stack segmnet
+	; release inode
+9:	call	iput
+	ld	ix,(exargs)
+	
+	
 	
 	; same as exbad, but releases
 	; current block

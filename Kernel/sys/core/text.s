@@ -127,7 +127,7 @@ pexec:
 	call	bread
 	ld	a,(u+u_t.error)
 	or	a
-	jr	nz,exbadb
+	jp	nz,exbadb
 	
 	; read in magic number and
 	; get load in addresses
@@ -144,7 +144,7 @@ pexec:
 	; error!
 0:	ld	a,enoexec
 	ld	(u+u_t.error),a
-	jr	exbadb
+	jp	exbadb
 	
 	; calculate image offset
 1:	inc	hl

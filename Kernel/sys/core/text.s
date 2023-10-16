@@ -8,8 +8,7 @@
 ; image stored in the passed open inode
 ; onto the current profile.
 ; passed inode will be closed
-; b = set to 1 to skip arg gathering
-; ix = image to overlay
+; ix = inode of executable file
 ;
 ; saves: af, bc, de
 .globl pexec

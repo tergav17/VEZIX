@@ -42,6 +42,22 @@ main:
 	call	dinit	; device init
 	call	iinit	; mount root
 	
+	
+	; attempt to load init into core
+	; start with namei
+	ld	hl,str_init
+	ld	(u+u_t.dirp),hl
+	ld	hl,schar
+	call	namei
+	
+	; check for errors
+	ld	a,(u+u_t.error)
+	or	a
+	jp	nz,panic
+	
+	; exec /etc/init
+	call	pexec
+	
 	;ld	hl,0
 	;ld	bc,0
 	;call	bread

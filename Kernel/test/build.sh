@@ -1,5 +1,13 @@
-cd ../sys/conf
+# build disk image
+pushd ../sys/conf
+cd ../../Utility/FuzixFS
 
+# create empty disk imag 
+./mkfs ../../Kernel/test/root.dsk 64 4096
+
+# populate disk image with test binaries
+
+popd
 # build system components
 cd ../core
 printf "\n\tbuilding core...\n"

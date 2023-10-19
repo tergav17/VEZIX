@@ -1,5 +1,12 @@
 # build disk image
 pushd ../sys/conf
+
+cd ../../Applications
+
+# build user space
+cd core
+as_r -v init.s
+
 cd ../../Utility/FuzixFS
 
 # create empty disk imag 

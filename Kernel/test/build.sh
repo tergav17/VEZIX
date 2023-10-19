@@ -1,22 +1,26 @@
 # build disk image
-pushd ../sys/conf
 
 cd ../../Applications
 
 # build user space
 cd core
+
+printf "\n\tbuilding utils...\n"
 as_r -v init.s
+mv a.out bin/init
 
 cd ../../Utility/FuzixFS
 
 # create empty disk imag 
 ./mkfs ../../Kernel/test/root.dsk 64 4096
+./ucp ../../Kernel/test/root.dsk "mkdir bin"
+./ucp ../../Kernel/test/root.dsk "get ../../Applications/core/bin/init /bin/init"
 
 # populate disk image with test binaries
 
-popd
 # build system components
-cd ../core
+cd ../../Kernel/sys
+cd core
 printf "\n\tbuilding core...\n"
 as_r -v ../header.s h/core.s main.s prf.s
 echo -n "core size: "

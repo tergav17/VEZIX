@@ -58,6 +58,9 @@ main:
 	; exec /etc/init
 	call	pexec
 	
+	; go to user space
+	jp	uret
+	
 	;ld	hl,0
 	;ld	bc,0
 	;call	bread

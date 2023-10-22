@@ -236,6 +236,7 @@ m_reg	=	7
 	word_t	r_af,
 	word_t	r_bc,
 	word_t	r_de,
+	word_t	r_sp,
 	word_t	r_hl
 }
 

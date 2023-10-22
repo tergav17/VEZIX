@@ -11,11 +11,11 @@ mv a.out bin/init
 
 cd ../../Utility/FuzixFS
 
-# create empty disk imag 
+# create empty disk image
 ./mkfs ../../Kernel/test/root.dsk 64 4096
-./ucp ../../Kernel/test/root.dsk "mkdir bin"
+./ucp ../../Kernel/test/root.dsk "mkdir etc"
 ./ucp ../../Kernel/test/root.dsk "mkdir usr"
-./ucp ../../Kernel/test/root.dsk "get ../../Applications/core/bin/init /bin/init"
+./ucp ../../Kernel/test/root.dsk "get ../../Applications/core/bin/init /etc/init"
 ./ucp ../../Kernel/test/root.dsk "get test.txt /usr/test.txt"
 
 # populate disk image with test binaries

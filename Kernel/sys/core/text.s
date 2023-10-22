@@ -243,10 +243,19 @@ pexec:
 
 	; initialize stack segmnet
 	; release inode
-9:	call	iput
+9:call	iput
 	ld	ix,(exargs)
 	
+	; todo: place args in stack segment
 	
+	call	brelse
+	
+	; set stack pointer
+	ld	hl,utop-2
+	ld	(u+u_t.r_sp),hl
+	ld	de,ubase
+	call	suword
+	ret
 	
 	; same as exbad, but releases
 	; current block

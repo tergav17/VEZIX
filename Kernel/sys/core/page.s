@@ -87,3 +87,10 @@ uclear:
 	dec	bc
 	ldir
 	ret
+	
+; returns from a system call
+; the top of user stack is popped
+; onto the pc
+.globl sret
+sret:
+	ret

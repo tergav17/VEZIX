@@ -93,4 +93,19 @@ uclear:
 ; onto the pc
 .globl sret
 sret:
+	ld	sp,u+u_t.r_ix
+	pop	ix
+	pop	iy
+	pop	af
+	pop	bc
+	pop	de
+	pop	hl
+	ex	af,af'
+	exx
+	pop	af
+	pop	bc
+	pop	de
+	pop	hl
+	ld	sp,hl
+	ld	hl,(u+u_t.r_hl)
 	ret

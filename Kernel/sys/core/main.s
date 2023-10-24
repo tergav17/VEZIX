@@ -59,7 +59,7 @@ main:
 	call	pexec
 	
 	; go to user space
-	jp	uret
+	; jp	uret
 	
 	;ld	hl,0
 	;ld	bc,0

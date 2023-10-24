@@ -9,3 +9,6 @@
 
 ; fs
 .extern iinit, iget, bmap, namei, schar
+
+; proc
+.extern pexec, sret

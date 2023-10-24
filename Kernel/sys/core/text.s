@@ -251,9 +251,9 @@ pexec:
 	call	brelse
 	
 	; set stack pointer
-	ld	hl,utop-2
+	ld	hl,c_utop-2
 	ld	(u+u_t.r_sp),hl
-	ld	de,ubase
+	ld	de,c_ubase
 	call	suword
 	ret
 	

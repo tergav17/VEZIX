@@ -243,7 +243,7 @@ pexec:
 
 	; initialize stack segmnet
 	; release inode
-9:call	iput
+9:	call	iput
 	ld	ix,(exargs)
 	
 	; todo: place args in stack segment

@@ -154,10 +154,14 @@ kputc:
 	ret
 	
 ; print panic and loop
+; a = error #
 ;
 ; uses: n/a
 .globl panic
 panic:
+	ld	h,0
+	ld	l,a
+	push	hl
 	ld	hl,str_panc
 	call	kputs
 	pop	hl

@@ -15,8 +15,8 @@ cd ../../Utility/FuzixFS
 ./mkfs ../../Kernel/test/root.dsk 64 4096
 ./ucp ../../Kernel/test/root.dsk "mkdir etc"
 ./ucp ../../Kernel/test/root.dsk "mkdir usr"
-./ucp ../../Kernel/test/root.dsk "get ../../Applications/core/bin/init /etc/init"
-./ucp ../../Kernel/test/root.dsk "get test.txt /usr/test.txt"
+./ucp ../../Kernel/test/root.dsk "cd etc ; get ../../Applications/core/bin/init init"
+./ucp ../../Kernel/test/root.dsk "cd usr ; get test.txt test.txt"
 
 # populate disk image with test binaries
 
@@ -73,4 +73,4 @@ echo -n "total size: "
 size_r vezix.o
 cp vezix.o vezix
 reloc_r -n vezix 0xC000
-z80dasm -l -g 0xC000 -o vezix.asm vezix
+z80dasm -lag 0xC000 -o vezix.asm vezix

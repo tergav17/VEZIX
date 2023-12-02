@@ -52,6 +52,7 @@ printf "\n\tbuilding dev and linking...\n"
 # build devices
 cd ../dev
 as_r ../header.s shd.s ; mv a.out ../conf/obj/shd.o
+as_r ../header.s rcide.s ; mv a.out ../conf/obj/rcide.o
 
 # build special components
 cd ../conf
@@ -64,7 +65,7 @@ mv a.out obj/top.o
 as_r ../header.s conf.s
 mv a.out obj/conf.o
 cd obj
-ld_r -v low.o core.o blkio.o fs.o proc.o conf.o shd.o top.o
+ld_r -v low.o core.o blkio.o fs.o proc.o conf.o rcide.o top.o
 mv a.out ../out/vezix.o
 
 # post process

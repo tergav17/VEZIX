@@ -7,6 +7,7 @@
 .globl main
 main:
 	; place stack in kstack
+	di
 	ld	sp,u+$u_t
 	
 	; clear kernel memory
@@ -37,11 +38,12 @@ main:
 	ld	hl,str_crlf
 	call	kputs
 	
+	jp	haltloop
+	
 	; init subsystems
 	call	binit	; buf init
 	call	dinit	; device init
 	call	iinit	; mount root
-	
 	
 	; attempt to load init into core
 	; start with namei
@@ -107,7 +109,7 @@ main:
 	
 	
 	
-	halt
+haltloop:jp	haltloop
 	
 
 .bss

@@ -7,8 +7,8 @@
 ; this file is device specific, and
 ; needs porting to different hardware 
 
-prf_csr =	0x10
-prf_data = 	0x11
+prf_csr =	0x80
+prf_data = 	0x81
 
 .text
 
@@ -146,8 +146,12 @@ kputd:
 ;
 ; uses: af, b
 kputc:
+	ld	a,b
+0:	call	0x1c73
+	jr	z,0b
+	ret
 	in	a,(prf_csr)
-	and	0x02
+	bit	1,a
 	jr	z,kputc		; loop if not ready
 	ld	a,b
 	out	(prf_data),a	; write character
@@ -178,7 +182,7 @@ panic:
 kinit:
 	ld	a,0x03
 	out	(prf_csr),a	; reset i/o
-	ld	a,0x15
+	ld	a,0x16
 	out	(prf_csr),a	; config i/o
 	ret
 	

@@ -2,7 +2,7 @@
 ; vezix device configuration
 
 .extern jphl
-.extern shdstrat, shdinit, shdtab
+.extern idestrat, ideinit, idetab
 
 .text
 
@@ -14,7 +14,7 @@
 ; uses: all
 .globl dinit
 dinit:
-	call	shdinit
+	call	ideinit
 	ret
 	
 
@@ -24,8 +24,8 @@ dinit:
 ; are added to the kernel
 .globl bdevsw
 .defl bdev_t[c_nbdev] bdevsw {
-	shdstrat,
-	shdtab
+	idestrat,
+	idetab
 }
 
 ; character device switch

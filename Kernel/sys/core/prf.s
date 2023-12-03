@@ -145,11 +145,7 @@ kputd:
 ; b = character to print
 ;
 ; uses: af, b
-kputc:
-	ld	a,b
-0:	call	0x1c73
-	jr	z,0b
-	ret
+kputc:	
 	in	a,(prf_csr)
 	bit	1,a
 	jr	z,kputc		; loop if not ready

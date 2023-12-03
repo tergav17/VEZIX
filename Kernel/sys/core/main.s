@@ -38,7 +38,7 @@ main:
 	ld	hl,str_crlf
 	call	kputs
 	
-	jp	haltloop
+	
 	
 	; init subsystems
 	call	binit	; buf init
@@ -54,6 +54,9 @@ main:
 	
 	; check for errors
 	ld	a,(u+u_t.error)
+	
+	jp	haltloop
+	
 	or	a
 	jp	nz,panic
 	

@@ -12,11 +12,11 @@ mv a.out bin/init
 cd ../../Utility/FuzixFS
 
 # create empty disk image
-./mkfs ../../Kernel/test/root.dsk 64 4096
-./ucp ../../Kernel/test/root.dsk "mkdir etc"
-./ucp ../../Kernel/test/root.dsk "mkdir usr"
-./ucp ../../Kernel/test/root.dsk "cd etc ; get ../../Applications/core/bin/init init"
-./ucp ../../Kernel/test/root.dsk "cd usr ; get test.txt test.txt"
+./mkfs ../../Kernel/test/root.hd 64 4096
+./ucp ../../Kernel/test/root.hd "mkdir etc"
+./ucp ../../Kernel/test/root.hd "mkdir usr"
+./ucp ../../Kernel/test/root.hd "cd etc ; get ../../Applications/core/bin/init init"
+./ucp ../../Kernel/test/root.hd "cd usr ; get test.txt test.txt"
 
 # populate disk image with test binaries
 
@@ -52,7 +52,7 @@ printf "\n\tbuilding dev and linking...\n"
 # build devices
 cd ../dev
 as_r ../header.s shd.s ; mv a.out ../conf/obj/shd.o
-as_r ../header.s rcide.s ; mv a.out ../conf/obj/rcide.o
+as_r ../header.s rccf.s ; mv a.out ../conf/obj/rccf.o
 
 # build special components
 cd ../conf
@@ -65,7 +65,7 @@ mv a.out obj/top.o
 as_r ../header.s conf.s
 mv a.out obj/conf.o
 cd obj
-ld_r -v low.o core.o blkio.o fs.o proc.o conf.o rcide.o top.o
+ld_r -v low.o core.o blkio.o fs.o proc.o conf.o rccf.o top.o
 mv a.out ../out/vezix.o
 
 # post process

@@ -57,6 +57,10 @@ bmap:
 ; ix = inode
 ; saves: af, bc, de
 .globl namei
+
+; local variables
+nacount	= u+u_t.gp0
+
 namei:
 	call	svnhl
 	
@@ -160,7 +164,7 @@ nerr:	call	iput
 	ld	h,a
 
 	; load count as gp0
-	ld	(u+u_t.gp0),hl
+	ld	(nacount),hl
 	
 	; start at block 0
 	ld	hl,0
@@ -184,12 +188,12 @@ nerr:	call	iput
 	; start the search
 	; first we check if there are any more entires
 4:	push	hl
-	ld	hl,(u+u_t.gp0)
+	ld	hl,(nacount)
 	ld	a,h
 	or	l
 	jr	z,8f
 	dec	hl
-	ld	(u+u_t.gp0),hl
+	ld	(nacount),hl
 	pop	hl
 
 	; search block

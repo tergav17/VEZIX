@@ -11,4 +11,4 @@
 .extern iinit, iget, bmap, namei, schar
 
 ; proc
-.extern pexec, sret
+.extern pexec, sret, suword

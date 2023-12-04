@@ -54,13 +54,14 @@ main:
 	
 	; check for errors
 	ld	a,(u+u_t.error)
-	
-	jp	haltloop
-	
 	or	a
 	jp	nz,panic
 	
 	; exec /etc/init
+	ld	hl,c_ubase
+	ld	de,0
+	ld	(u+u_t.args + 2),hl
+	call	suword
 	call	pexec
 	
 	; go to user space

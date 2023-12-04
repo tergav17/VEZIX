@@ -7,7 +7,7 @@
 
 ; memory map config
 c_utop 	=	t_base	; uspace top
-c_ubase =	0x4000  ; uspace base
+c_ubase =	0x8000  ; uspace base
 c_ksize	=	64	; kstack size
 
 ; data structure config

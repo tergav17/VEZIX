@@ -80,11 +80,17 @@ sublock:
 ; uses: af, bc, de, hl
 .globl uclear
 uclear:
+	ld	a,b
+	or	c
+	ret	z
 	ld	h,d
 	ld	l,e
 	ld	(hl),0
 	inc	de
 	dec	bc
+	ld	a,b
+	or	c
+	ret	z
 	ldir
 	ret
 	

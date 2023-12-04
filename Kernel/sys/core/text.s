@@ -147,9 +147,9 @@ pexec:
 	
 	; calculate image offset
 1:	inc	hl
-	ld	b,(hl)
-	inc	hl
 	ld	c,(hl)
+	inc	hl
+	ld	b,(hl)
 	ex	de,hl
 	ld	hl,c_ubase
 	sbc	hl,bc
@@ -159,21 +159,18 @@ pexec:
 	; get image count
 	ld	de,8
 	add	hl,de
-	ld	d,(hl)
-	inc	hl
 	ld	e,(hl)
+	inc	hl
+	ld	d,(hl)
 	inc	hl
 	ld	(excount),de
 	
 	
 	; get image size
-	ld	a,(hl)
+	ld	e,(hl)
 	inc	hl
-	ld	h,(hl)
-	ld	l,a
-	ld	b,h
-	ld	c,l
-	ld	de,c_utop-c_ubase
+	ld	d,(hl)
+	ld	hl,c_utop-c_ubase
 	or	a
 	sbc	hl,de
 	jr	nc,2f
@@ -185,6 +182,8 @@ pexec:
 
 	; commit to core image
 	; clear core
+	ld	b,d
+	ld	c,e
 2:	ld	de,c_ubase
 	call	uclear
 	

@@ -208,6 +208,9 @@ pexec:
 	ld	de,(expoint)
 	call	sublock
 	
+	; todo: figure out how to handle
+	; loading and relocation here
+	
 	; release current block
 	ld	(expoint),de
 	call 	brelse

@@ -2,6 +2,11 @@
 ; manages seperation between user space
 ; and kernel space
 
+; if the kernel is to have user space and
+; kernel space in different memory spaces,
+; then this file must be modified to handle
+; communication between the two
+
 .text
 
 ; fetches a byte from user space

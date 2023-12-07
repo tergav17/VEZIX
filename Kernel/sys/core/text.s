@@ -172,6 +172,8 @@ pexec:
 	ld	d,(hl)
 	ld	hl,c_utop-c_ubase
 	or	a
+	ld	b,d
+	ld	c,e
 	sbc	hl,de
 	jr	nc,2f
 	
@@ -182,9 +184,15 @@ pexec:
 
 	; commit to core image
 	; clear core
-	ld	b,d
-	ld	c,e
-2:	ld	de,c_ubase
+2:	ld	h,b
+	ld	l,c
+	ld	de,(excount)
+	sbc	hl,de
+	ld	b,h
+	ld	c,l
+	ld	hl,c_ubase
+	add	hl,de
+	ex	de,hl
 	call	uclear
 	
 	; figure out how many bytes

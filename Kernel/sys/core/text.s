@@ -223,7 +223,7 @@ pexec:
 	ld	(expoint),de
 	call 	brelse
 	pop	af
-	jr	c,5f	; do more?
+	jr	c,8f	; do more?
 	pop	ix
 	pop	hl
 	inc	hl
@@ -243,7 +243,7 @@ pexec:
 	
 	
 	; we are done loading
-5:	ld	hl,(exoff)
+8:	ld	hl,(exoff)
 	ld	a,h
 	or	l
 	jr	z,9f
